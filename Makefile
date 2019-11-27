@@ -9,13 +9,16 @@ $(CFLAGS)	:
 
 # HEADER
 INC_DIR		=	./include
-INC_NAME	=	header.h \
+INC_NAME	=	Cub3D.h \
 INC			=	-I $(addprefix $(INC_DIR)/, $INC_NAME)
 # SOURCES
 SRC_DIR		=	./src
 SRC			=	main.c \
 				exit_game.c \
 				init.c \
+				key.c \
+				draw.c \
+				texture.c \
 
 # OBJETS
 OBJS_NAME	=	$(SRC:.c=.o)
