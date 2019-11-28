@@ -86,6 +86,12 @@ void init_tex(t_data *data)
 t_data		init(char **av)
 {
 	t_data		data;
+
+	data.win.height = 384;
+	data.win.width = 512;
+	init_mlx(&data);
+	init_map(&data);
+	init_player(&data);
 	// int		i;
 	// int		fd;
 	// char	*line;
@@ -105,11 +111,6 @@ t_data		init(char **av)
 	// 	// if (line[0] == 'C')
 	// 	free(line);
 	// }
-	data.win.height = 384;
-	data.win.width = 512;
-	init_mlx(&data);
-	init_map(&data);
-	init_player(&data);
 	// init_tex(data);
 	return (data);
 }

@@ -14,13 +14,13 @@ INC			=	-I $(addprefix $(INC_DIR)/, $INC_NAME)
 # SOURCES
 SRC_DIR		=	./src
 SRC			=	main.c \
-				exit_game.c \
 				init.c \
-				key.c \
-				draw.c \
-				texture.c \
 				raycast.c \
+				draw.c \
+				key.c \
 				move.c \
+				texture.c \
+				exit_game.c \
 
 # OBJETS
 OBJS_NAME	=	$(SRC:.c=.o)

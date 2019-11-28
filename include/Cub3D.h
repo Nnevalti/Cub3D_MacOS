@@ -51,15 +51,15 @@ typedef struct	s_ray
 	int			mapX;
 	int			mapY;
 	t_coord		delta_dist;
+	int			stepX;
+	int			stepY;
 	t_coord		side_dist;
 	int			hit;
 	int			side;
 	double		wall_dist;
+	int			line_height;
 	int			wall_start;
 	int			wall_end;
-	int			line_height;
-	int			stepX;
-	int			stepY;
 }				t_ray;
 
 typedef struct	s_key
@@ -72,8 +72,8 @@ typedef struct	s_key
 
 typedef struct	s_img
 {
-	char	file;
 	void	*img_ptr;
+	char	file;
 	char	addr;
 	int		height;
 	int		width;
@@ -102,17 +102,12 @@ typedef struct	s_data
 	int			RGB;
 }				t_data;
 
-int				exit_game(t_data *data);
 t_data			init(char **av);
-void			init_mlx(t_data *data);
-void			init_map(t_data *data);
-void			init_player(t_data *data);
-void			init_win (char *line, t_data *data);
-int				move_player(t_data *data);
+int				game(t_data *data);
+void			draw_line(int x, int start, int end, int color, t_data *data);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
-void			draw_line(int x, int start, int end, int color, t_data *data);
-void			init_tex(t_data *data);
-int				game(t_data *data);
+int				move_player(t_data *data);
+int				exit_game(t_data *data);
 
 #endif
