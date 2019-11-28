@@ -16,7 +16,7 @@ void	draw_line(int x, int start, int end, int color, t_data *data)
 		start++;
 	}
 	y = end;
-	while (y <= data->win->height - 1)
+	while (y <= data->win.height - 1)
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x535151);
 		y++;

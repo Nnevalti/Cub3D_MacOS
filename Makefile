@@ -19,6 +19,8 @@ SRC			=	main.c \
 				key.c \
 				draw.c \
 				texture.c \
+				raycast.c \
+				move.c \
 
 # OBJETS
 OBJS_NAME	=	$(SRC:.c=.o)
@@ -48,7 +50,7 @@ $(LIBFT)	:
 				@make -C $(FT_DIR)
 
 $(NAME)		:	$(OBJS)
-				$(CC) $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
+				$(CC) -fsanitize=address $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
 
 clean		:
 				@rm -rf $(OBJS)

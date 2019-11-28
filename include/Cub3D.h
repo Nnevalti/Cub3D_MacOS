@@ -52,6 +52,12 @@ typedef struct	s_ray
 	int			mapY;
 	t_coord		delta_dist;
 	t_coord		side_dist;
+	int			hit;
+	int			side;
+	double		wall_dist;
+	int			wall_start;
+	int			wall_end;
+	int			line_height;
 	int			stepX;
 	int			stepY;
 }				t_ray;
@@ -66,41 +72,38 @@ typedef struct	s_key
 
 typedef struct	s_img
 {
-	char	*file;
+	char	file;
 	void	*img_ptr;
-	char	*addr;
+	char	addr;
 	int		height;
 	int		width;
-	int		*endian;
-	int		*size_line;
-	int		*bits_per_pixel;
+	int		endian;
+	int		s_line;
 }				t_img;
 
-typedef struct	s_tex
-{
-	t_img		*N;
-	t_img		*S;
-	t_img		*W;
-	t_img		*O;
-	int			RGB;
-
-}				t_tex;
 
 typedef struct	s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_win		*win;
+	t_win		win;
 	int			map[24][24];
-	t_key		*key;
-	t_player	*player;
-	t_ray		*ray;
+	t_key		key;
+	t_player	player;
+	t_ray		ray;
 	t_coord		cam;
-	t_tex		*tex;
+
+	t_img		bg;
+	t_img		north;
+	t_img		south;
+	t_img		west;
+	t_img		east;
+	t_img		sprite;
+	int			RGB;
 }				t_data;
 
 int				exit_game(t_data *data);
-int				init(char **av, t_data *data);
+t_data			init(char **av);
 void			init_mlx(t_data *data);
 void			init_map(t_data *data);
 void			init_player(t_data *data);
@@ -110,5 +113,6 @@ int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 void			draw_line(int x, int start, int end, int color, t_data *data);
 void			init_tex(t_data *data);
+int				game(t_data *data);
 
 #endif
