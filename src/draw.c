@@ -12,7 +12,9 @@ void	draw_line(int x, int start, int end, int color, t_data *data)
 	}
 	while (start <= end)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, start, color);
+		// set the wall pixel
+		// data->win.addsr[start * bits_per_pixel] = data->north.addr[];
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, start, 0x000000);
 		start++;
 	}
 	y = end;

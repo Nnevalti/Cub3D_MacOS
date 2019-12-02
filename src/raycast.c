@@ -99,8 +99,9 @@ int		game(t_data *data)
 		ray_step(data);
 		ray_hit(data);
 		wall_height(data);
-		draw_line(x, data->ray.wall_start, data->ray.wall_end, 0xB37339, data);
+		// draw_line(x, data->ray.wall_start, data->ray.wall_end, 0xB37339, data);
 		x++;
 	}
+	
 	return (0);
 }

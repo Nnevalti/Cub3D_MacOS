@@ -78,20 +78,32 @@ void init_player(t_data *data)
 
 void init_tex(t_data *data)
 {
-	data->north.img_ptr = mlx_xpm_file_to_image (data->mlx_ptr, "../textures/bluestone.xpm", &data->win.width, &data->win.height);
-	// data->tex.N.img_ptr = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height);
-	// data->tex.N.addr = mlx_get_data_addr(data->tex.N.img_ptr, data->tex.N.bits_per_pixel, data->tex.N.size_line, data->tex.N.endian);
+	data->win.img = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height);
+	data->win.addr = (int *)mlx_get_data_addr(data->win.img, &data->win.bits_per_pixel, &data->win.s_line, &data->win.endian);
+	// char *tmp;
+	// tmp = "../textures/bluestone.xpm";
+	// int		h;
+	// int		w;
+	// int		i;
+	// h = 500;
+	// w = 500;
+	data->north.img_ptr = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/bluestone.xpm", &data->north.height, &data->north.width);
+	data->north.addr = (int *)mlx_get_data_addr(data->north.img_ptr, &data->north.bits_per_pixel, &data->north.s_line, &data->north.endian);
+
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->north.img_ptr, 0, 0);
 }
 
 t_data		init(char **av)
 {
 	t_data		data;
 
-	data.win.height = 384;
-	data.win.width = 512;
+	data.win.height = 1440;
+	data.win.width = 2560;
 	init_mlx(&data);
 	init_map(&data);
 	init_player(&data);
+	init_tex(&data);
+
 	// int		i;
 	// int		fd;
 	// char	*line;
@@ -111,6 +123,5 @@ t_data		init(char **av)
 	// 	// if (line[0] == 'C')
 	// 	free(line);
 	// }
-	// init_tex(data);
 	return (data);
 }

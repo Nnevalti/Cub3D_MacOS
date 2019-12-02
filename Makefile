@@ -28,8 +28,10 @@ OBJS		=	$(addprefix $(SRC_DIR)/, $(OBJS_NAME))
 
 # MINILIBX LIB
 MLX_DIR		=	./minilibx
+# MLX_DIR		=	./minilibx_opengl
 MLX_INC		=	-I $(MLX_DIR)
 MLX_LNK		=	-L$(MLX_DIR) -lmlx
+# MLX_LNK		=	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 MLX			=	$(addprefix $(MLX_DIR)/, libmlx.dylib)
 
 # LIBFT LIB

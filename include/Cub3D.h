@@ -28,6 +28,12 @@ typedef struct	s_win
 {
 	int			height;
 	int			width;
+	void		*img;
+	int			*addr;
+	int			bits_per_pixel;
+	int			endian;
+	int			s_line;
+
 }				t_win;
 
 typedef struct	s_coord
@@ -73,8 +79,9 @@ typedef struct	s_key
 typedef struct	s_img
 {
 	void	*img_ptr;
+	int		*addr;
 	char	file;
-	char	addr;
+	int		bits_per_pixel;
 	int		height;
 	int		width;
 	int		endian;
