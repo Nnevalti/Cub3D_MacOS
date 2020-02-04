@@ -15,7 +15,7 @@
 
 # include "../src/libft/libft.h"
 # include "mlx.h"
-#include <math.h>
+# include <math.h>
 # include <stdio.h>
 
 enum	e_bool
@@ -28,12 +28,6 @@ typedef struct	s_win
 {
 	int			height;
 	int			width;
-	void		*img;
-	int			*addr;
-	int			bits_per_pixel;
-	int			endian;
-	int			s_line;
-
 }				t_win;
 
 typedef struct	s_coord
@@ -66,6 +60,7 @@ typedef struct	s_ray
 	int			line_height;
 	int			wall_start;
 	int			wall_end;
+	double		wall_x;
 }				t_ray;
 
 typedef struct	s_key
@@ -76,17 +71,16 @@ typedef struct	s_key
 	int		right;
 }				t_key;
 
-typedef struct	s_img
+typedef struct	s_tex
 {
-	void	*img_ptr;
-	int		*addr;
-	char	file;
-	int		bits_per_pixel;
+	void	*img;
+	char	*addr;
+	int		bpp;
 	int		height;
 	int		width;
 	int		endian;
 	int		s_line;
-}				t_img;
+}				t_tex;
 
 
 typedef struct	s_data
@@ -100,18 +94,20 @@ typedef struct	s_data
 	t_ray		ray;
 	t_coord		cam;
 
-	t_img		bg;
-	t_img		north;
-	t_img		south;
-	t_img		west;
-	t_img		east;
-	t_img		sprite;
-	int			RGB;
+	t_tex		display;
+	t_tex		sky;
+	t_tex		floor;
+	t_tex		north;
+	t_tex		south;
+	t_tex		west;
+	t_tex		east;
+	t_tex		sprite;
 }				t_data;
 
 t_data			init(char **av);
+void			raycast(t_data *data);
 int				game(t_data *data);
-void			draw_line(int x, int start, int end, int color, t_data *data);
+void			draw_tex(int x, int start, int end, t_data *data);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);

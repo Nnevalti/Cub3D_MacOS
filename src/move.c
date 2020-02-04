@@ -38,5 +38,7 @@ int		move_player(t_data *data)
 		right(data);
 	if (data->key.left == 1)
 		left(data);
-	return (0);
+	if (data->key.up == 0 && data->key.down == 0 && data->key.left == 0 && data->key.right == 0)
+		return (0);
+	return (1);
 }

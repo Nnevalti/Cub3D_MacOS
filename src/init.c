@@ -78,30 +78,32 @@ void init_player(t_data *data)
 
 void init_tex(t_data *data)
 {
-	data->win.img = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height);
-	data->win.addr = (int *)mlx_get_data_addr(data->win.img, &data->win.bits_per_pixel, &data->win.s_line, &data->win.endian);
-	// char *tmp;
-	// tmp = "../textures/bluestone.xpm";
-	// int		h;
-	// int		w;
-	// int		i;
-	// h = 500;
-	// w = 500;
-	data->north.img_ptr = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/bluestone.xpm", &data->north.height, &data->north.width);
-	data->north.addr = (int *)mlx_get_data_addr(data->north.img_ptr, &data->north.bits_per_pixel, &data->north.s_line, &data->north.endian);
+	data->floor.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/floor_1.xpm", &data->floor.width, &data->floor.height);
+	data->floor.addr = mlx_get_data_addr(data->floor.img, &data->floor.bpp, &data->floor.s_line, &data->floor.endian);
 
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->north.img_ptr, 0, 0);
+	data->sky.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/sky_1.xpm", &data->sky.width, &data->sky.height);
+	data->sky.addr = mlx_get_data_addr(data->sky.img, &data->sky.bpp, &data->sky.s_line, &data->sky.endian);
+
+	data->north.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/wall_2.xpm", &data->north.width, &data->north.height);
+	data->north.addr = mlx_get_data_addr(data->north.img, &data->north.bpp, &data->north.s_line, &data->north.endian);
+}
+
+void init_display(t_data *data)
+{
+	data->display.img = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height);
+	data->display.addr = mlx_get_data_addr(data->display.img, &data->display.bpp, &data->display.s_line, &data->display.endian);
 }
 
 t_data		init(char **av)
 {
 	t_data		data;
 
-	data.win.height = 1440;
-	data.win.width = 2560;
+	data.win.height = 540;
+	data.win.width = 960;
 	init_mlx(&data);
 	init_map(&data);
 	init_player(&data);
+	init_display(&data);
 	init_tex(&data);
 
 	// int		i;

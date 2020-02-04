@@ -7,11 +7,9 @@ void init_raycasting(t_data *data)
 	data->ray.dir.y = data->player.dir.y
 	+ data->player.plane.y * data->cam.x;
 
-	//which box we're in
 	data->ray.mapX = (int)data->player.pos.x;
 	data->ray.mapY = (int)data->player.pos.y;
 
-	// distance to the next box in x or y
 	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
 	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
 
@@ -79,18 +77,22 @@ void wall_height(t_data *data) {
 	}
 	data->ray.line_height = (int)(data->win.height / data->ray.wall_dist);
 	data->ray.wall_start = -data->ray.line_height / 2 + data->win.height / 2;
-	if (data->ray.wall_start < 0)
-		data->ray.wall_start = 0;
 	data->ray.wall_end = data->ray.line_height / 2 + data->win.height / 2;
-	if (data->ray.wall_end >= data->win.height)
-		data->ray.wall_end = data->win.height - 1;
 }
-int		game(t_data *data)
+
+void wall_x(t_data *data) {
+	if (data->ray.side == 0)
+		data->ray.wall_x = data->player.pos.y + data->ray.wall_dist * data->ray.dir.y;
+	else
+		data->ray.wall_x = data->player.pos.x + data->ray.wall_dist * data->ray.dir.x;
+	data->ray.wall_x -= floor(data->ray.wall_x);
+}
+
+void	raycast(t_data *data)
 {
 	int		x;
 
 	x = 0;
-	move_player(data);
 	while (x < data->win.width)
 	{
 		data->cam.x = 2 * x / (double)data->win.width - 1;
@@ -99,9 +101,16 @@ int		game(t_data *data)
 		ray_step(data);
 		ray_hit(data);
 		wall_height(data);
-		// draw_line(x, data->ray.wall_start, data->ray.wall_end, 0xB37339, data);
+		wall_x(data);
+		draw_tex(x, data->ray.wall_start, data->ray.wall_end, data);
 		x++;
 	}
-	
-	return (0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
+}
+
+int		game(t_data *data)
+{
+	if (move_player(data))
+		raycast(data);
+	return(0);
 }
