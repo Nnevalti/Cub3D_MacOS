@@ -24,6 +24,14 @@ enum	e_bool
 	true
 };
 
+typedef enum	e_side
+{
+				N,
+				S,
+				E,
+				O
+}				t_side;
+
 typedef struct	s_win
 {
 	int			height;
@@ -55,7 +63,7 @@ typedef struct	s_ray
 	int			stepY;
 	t_coord		side_dist;
 	int			hit;
-	int			side;
+	t_side		side;
 	double		wall_dist;
 	int			line_height;
 	int			wall_start;
@@ -107,7 +115,7 @@ typedef struct	s_data
 t_data			init(char **av);
 void			raycast(t_data *data);
 int				game(t_data *data);
-void			draw_tex(int x, int start, int end, t_data *data);
+void			draw_tex(int x, t_data *data);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);

@@ -46,16 +46,16 @@ void	init_mlx(t_data *data)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.width, data->win.height, "Cub3D");
 }
 
-void	init_map(t_data *data)
+void	init_map(t_data *data, int x, int y)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	while (i < 24)
+	while (i < y)
 	{
 		j = 0;
-		while (j < 24)
+		while (j < x)
 		{
 			data->map[i][j] = g_map[i][j];
 			j++;
@@ -76,16 +76,20 @@ void init_player(t_data *data)
 	data->player.rot_speed = 0.2;
 }
 
-void init_tex(t_data *data)
+void init_tex(void *mlx_ptr, t_tex *tex, char *name)
 {
-	data->floor.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/floor_1.xpm", &data->floor.width, &data->floor.height);
-	data->floor.addr = mlx_get_data_addr(data->floor.img, &data->floor.bpp, &data->floor.s_line, &data->floor.endian);
+	tex->img = mlx_xpm_file_to_image (mlx_ptr, name, &tex->width, &tex->height);
+	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->s_line, &tex->endian);
+}
 
-	data->sky.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/sky_1.xpm", &data->sky.width, &data->sky.height);
-	data->sky.addr = mlx_get_data_addr(data->sky.img, &data->sky.bpp, &data->sky.s_line, &data->sky.endian);
-
-	data->north.img = mlx_xpm_file_to_image (data->mlx_ptr, "./textures/wall_2.xpm", &data->north.width, &data->north.height);
-	data->north.addr = mlx_get_data_addr(data->north.img, &data->north.bpp, &data->north.s_line, &data->north.endian);
+void init_textures(t_data *data)
+{
+	init_tex(data->mlx_ptr, &data->north, "./textures/wall_1.xpm");
+	init_tex(data->mlx_ptr, &data->south, "./textures/wall_2.xpm");
+	init_tex(data->mlx_ptr, &data->east, "./textures/wall_3.xpm");
+	init_tex(data->mlx_ptr, &data->west, "./textures/wall_4.xpm");
+	init_tex(data->mlx_ptr, &data->sky, "./textures/sky_1.xpm");
+	init_tex(data->mlx_ptr, &data->floor, "./textures/floor_1.xpm");
 }
 
 void init_display(t_data *data)
@@ -101,10 +105,10 @@ t_data		init(char **av)
 	data.win.height = 540;
 	data.win.width = 960;
 	init_mlx(&data);
-	init_map(&data);
+	init_map(&data, 24, 24);
 	init_player(&data);
 	init_display(&data);
-	init_tex(&data);
+	init_textures(&data);
 
 	// int		i;
 	// int		fd;
