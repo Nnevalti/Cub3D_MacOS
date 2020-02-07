@@ -82,9 +82,11 @@ void wall_height(t_data *data) {
 
 void wall_x(t_data *data) {
 	if (data->ray.side == 0 || data->ray.side == 1)
-		data->ray.wall_x = data->player.pos.y + data->ray.wall_dist * data->ray.dir.y;
+		data->ray.wall_x = data->player.pos.y + data->ray.wall_dist
+			* data->ray.dir.y;
 	else
-		data->ray.wall_x = data->player.pos.x + data->ray.wall_dist * data->ray.dir.x;
+		data->ray.wall_x = data->player.pos.x + data->ray.wall_dist
+			* data->ray.dir.x;
 	data->ray.wall_x -= floor(data->ray.wall_x);
 }
 
@@ -105,12 +107,15 @@ void	raycast(t_data *data)
 		draw_tex(x, data);
 		x++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
+	// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
+	// draw_minimap(data, 24, 24);
 }
 
 int		game(t_data *data)
 {
 	if (move_player(data))
 		raycast(data);
+	BMP_create(data, "test.bmp");
+	exit_game(data);
 	return(0);
 }

@@ -19,7 +19,8 @@ SRC			=	main.c \
 				draw.c \
 				key.c \
 				move.c \
-				texture.c \
+				mini_map.c \
+				bitmap_file.c \
 				exit_game.c \
 
 # OBJETS
@@ -27,12 +28,14 @@ OBJS_NAME	=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(SRC_DIR)/, $(OBJS_NAME))
 
 # MINILIBX LIB
-MLX_DIR		=	./minilibx
+# MLX_DIR		=	./minilibx
 # MLX_DIR		=	./minilibx_opengl
+MLX_DIR		=	/usr/local/include
+MLX_LNK_DIR	=	/usr/local/lib/
 MLX_INC		=	-I $(MLX_DIR)
-MLX_LNK		=	-L$(MLX_DIR) -lmlx
-# MLX_LNK		=	-L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-MLX			=	$(addprefix $(MLX_DIR)/, libmlx.dylib)
+# MLX_LNK		=	-L$(MLX_DIR) -lmlx
+MLX_LNK		=	-L $(MLX_LNK_DIR) -lmlx -framework OpenGL -framework AppKit
+# MLX			=	$(addprefix $(MLX_DIR)/, libmlx.dylib)
 
 # LIBFT LIB
 FT_DIR		=	$(addprefix $(SRC_DIR)/, libft)
@@ -41,11 +44,11 @@ FT_LNK		=	-L $(FT_DIR) -lft
 LIBFT		=	$(addprefix $(FT_DIR), libft.a)
 
 # RULES
-all			:	$(MLX) $(LIBFT) $(NAME)
+all			:	$(LIBFT) $(NAME)
 
-$(MLX)		:
-				@echo "\nCompiling $(MLX_DIR)..."
-				@make -C $(MLX_DIR)
+# $(MLX)		:
+# 				@echo "\nCompiling $(MLX_DIR)..."
+# 				@make -C $(MLX_DIR)
 
 $(LIBFT)	:
 				@echo "\nCompiling $(FT_DIR)..."

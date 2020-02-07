@@ -77,7 +77,16 @@ typedef struct	s_key
 	int		down;
 	int		left;
 	int		right;
+	int		r_left;
+	int		r_right;
 }				t_key;
+
+typedef struct	s_color
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_color;
 
 typedef struct	s_tex
 {
@@ -101,10 +110,11 @@ typedef struct	s_data
 	t_player	player;
 	t_ray		ray;
 	t_coord		cam;
-
 	t_tex		display;
+	t_color		floor;
+	t_color		ceilling;
 	t_tex		sky;
-	t_tex		floor;
+	// t_tex		floor;
 	t_tex		north;
 	t_tex		south;
 	t_tex		west;
@@ -116,9 +126,12 @@ t_data			init(char **av);
 void			raycast(t_data *data);
 int				game(t_data *data);
 void			draw_tex(int x, t_data *data);
+void 			draw_minimap(t_data *data, int width, int height);
+void			draw_square(t_data *data, int x, int y, int size, int color);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);
+void	BMP_create(t_data	*data, char	*filename);
 int				exit_game(t_data *data);
 
 #endif
