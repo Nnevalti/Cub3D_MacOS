@@ -75,8 +75,8 @@ void	draw_tex(int x, t_data *data)
 	y = 0;
 	while (y < (data->ray.wall_start < 0 ? 0 : data->ray.wall_start))
 	{
-		draw_sky(&data->display, &data->sky, y, x);
-		// draw_rgb(data, &data->ceilling, y, x);
+		// draw_sky(&data->display, &data->sky, y, x);
+		draw_rgb(data, &data->ceilling, y, x);
 		y++;
 	}
 	while (y < (data->ray.wall_end >= data->win.height

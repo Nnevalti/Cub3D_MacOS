@@ -18,11 +18,11 @@
 # include <math.h>
 # include <stdio.h>
 
-enum	e_bool
+typedef enum	e_bool
 {
-	false,
-	true
-};
+				false,
+				true
+}				t_bool;
 
 typedef enum	e_side
 {
@@ -44,6 +44,16 @@ typedef struct	s_coord
 	double		y;
 }				t_coord;
 
+typedef struct	s_key
+{
+	int		up;
+	int		down;
+	int		left;
+	int		right;
+	int		r_left;
+	int		r_right;
+}				t_key;
+
 typedef struct	s_player
 {
 	t_coord		pos;
@@ -59,10 +69,10 @@ typedef struct	s_ray
 	int			mapX;
 	int			mapY;
 	t_coord		delta_dist;
+	t_coord		side_dist;
 	int			stepX;
 	int			stepY;
-	t_coord		side_dist;
-	int			hit;
+	t_bool		hit;
 	t_side		side;
 	double		wall_dist;
 	int			line_height;
@@ -70,16 +80,6 @@ typedef struct	s_ray
 	int			wall_end;
 	double		wall_x;
 }				t_ray;
-
-typedef struct	s_key
-{
-	int		up;
-	int		down;
-	int		left;
-	int		right;
-	int		r_left;
-	int		r_right;
-}				t_key;
 
 typedef struct	s_color
 {
@@ -99,39 +99,64 @@ typedef struct	s_tex
 	int		s_line;
 }				t_tex;
 
+typedef struct	s_error
+{
+	t_bool		file;
+	t_bool		mlx;
+	t_bool		win;
+	t_bool		tex;
+	t_bool		rgb;
+
+}				t_error;
 
 typedef struct	s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	t_error		error;
 	t_win		win;
-	int			map[24][24];
+
+	t_win		mapsize;
+	int			**map;
+
 	t_key		key;
+
 	t_player	player;
-	t_ray		ray;
+
 	t_coord		cam;
+	t_ray		ray;
+
 	t_tex		display;
 	t_color		floor;
 	t_color		ceilling;
-	t_tex		sky;
-	// t_tex		floor;
+	// t_tex		sky;
+	// t_tex		ground;
 	t_tex		north;
 	t_tex		south;
 	t_tex		west;
 	t_tex		east;
 	t_tex		sprite;
+
+
 }				t_data;
 
-t_data			init(char **av);
+void			init_error(t_data *data);
+void			check_error(t_data *data);
+void			check_textures(t_data *data);
+
+t_data			init_data(char **av, int fd);
+void			init_win (char *line, t_data *data);
+void			init_tex(t_data *data, t_tex *tex, char *path);
+void			init_color(t_data *data, char *line, t_color *color);
 void			raycast(t_data *data);
 int				game(t_data *data);
 void			draw_tex(int x, t_data *data);
-void 			draw_minimap(t_data *data, int width, int height);
+void 			draw_minimap(t_data *data, int width, int height, int size);
 void			draw_square(t_data *data, int x, int y, int size, int color);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);
-void	BMP_create(t_data	*data, char	*filename);
+void			BMP_create(t_data	*data, char	*filename);
 int				exit_game(t_data *data);
 
 #endif

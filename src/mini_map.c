@@ -18,13 +18,13 @@ void	draw_square(t_data *data, int x, int y, int size, int color)
 	}
 }
 
-void	draw_minimap(t_data *data, int width, int height)
+void	draw_minimap(t_data *data, int width, int height, int size)
 {
 	int		i;
 	int		j;
-	int		size;
+	int		offset;
 
-	size = 3;
+	offset = 20;
 	i = 0;
 	while (i < height)
 	{
@@ -32,13 +32,13 @@ void	draw_minimap(t_data *data, int width, int height)
 		while (j < width)
 		{
 			if (i == (int)data->player.pos.x && j == (int)data->player.pos.y)
-				draw_square(data, j * size + 20, i * size + 20, size, 0x66CC0000);
+				draw_square(data, j * size + offset, i * size + offset, size, 0x66CC0000);
 			else if (data->map[i][j] == 0)
-				draw_square(data, j * size + 20, i * size + 20, size, 0xAACCCCCC);
+				draw_square(data, j * size + offset, i * size + offset, size, 0xAACCCCCC);
 			else if (data->map[i][j] == 1)
-				draw_square(data, j * size + 20, i * size + 20, size, 0x66000000);
+				draw_square(data, j * size + offset, i * size + offset, size, 0x66000000);
 			else if (data->map[i][j] == 2)
-				draw_square(data, j * size + 20, i * size + 20, size, 0xAA009933);
+				draw_square(data, j * size + offset, i * size + offset, size, 0xAA009933);
 			j++;
 		}
 		i++;

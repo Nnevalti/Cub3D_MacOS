@@ -45,7 +45,7 @@ void ray_step(t_data *data)
 
 void ray_hit(t_data *data)
 {
-			while (data->ray.hit == 0)
+			while (data->ray.hit == false)
 			{
 				if (data->ray.side_dist.x < data->ray.side_dist.y)
 				{
@@ -60,7 +60,7 @@ void ray_hit(t_data *data)
 					data->ray.side = data->ray.dir.y > 0 ? E : O;
 				}
 				if (data->map[data->ray.mapX][data->ray.mapY] > 0)
-					data->ray.hit = 1;
+					data->ray.hit = true;
 			}
 }
 
@@ -98,7 +98,7 @@ void	raycast(t_data *data)
 	while (x < data->win.width)
 	{
 		data->cam.x = 2 * x / (double)data->win.width - 1;
-		data->ray.hit = 0;
+		data->ray.hit = false;
 		init_raycasting(data);
 		ray_step(data);
 		ray_hit(data);
@@ -107,15 +107,6 @@ void	raycast(t_data *data)
 		draw_tex(x, data);
 		x++;
 	}
-	// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
-	// draw_minimap(data, 24, 24);
-}
-
-int		game(t_data *data)
-{
-	if (move_player(data))
-		raycast(data);
-	BMP_create(data, "test.bmp");
-	exit_game(data);
-	return(0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
+	draw_minimap(data, 24, 24, 3);
 }

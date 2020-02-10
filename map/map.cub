@@ -5,8 +5,8 @@ WE ./textures/wall_2.xpm
 EA ./textures/wall_cartoon_4.xpm
 
 S ./path_to_the_sprite_texture
-F 220,100,0
-C 225,30,0
+F 220,100,255
+C 225,30,2220
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1

@@ -16,15 +16,22 @@
 int		main(int ac, char **av)
 {
 	t_data		data;
+	int			fd;
 
 	(void)ac;
-	data = init(av);
-	raycast(&data);
-	mlx_do_key_autorepeatoff(data.mlx_ptr);
+	init_error(&data);
+	if (!(av[1]) || (fd = open(av[1], O_RDONLY)) == -1)
+	{
+		data.error.file = true;
+		exit_game(&data);
+	}
+	data = init_data(av, fd);
+	// raycast(&data);
+	// mlx_do_key_autorepeatoff(data.mlx_ptr);
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 	mlx_hook(data.win_ptr, 3, 0, key_released, &data);
 	mlx_hook(data.win_ptr, 17, 0, exit_game, &data);
-	mlx_loop_hook(data.mlx_ptr, game, &data);
+	// mlx_loop_hook(data.mlx_ptr, game, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

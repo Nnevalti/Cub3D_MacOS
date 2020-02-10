@@ -1,38 +1,11 @@
 #include "../include/Cub3D.h"
 
-int			g_map[24][24] =
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,0,2,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
-
 void		init_mlx(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.width, data->win.height, "Cub3D");
 }
+
 
 void		init_win (char *line, t_data *data)
 {
@@ -40,131 +13,149 @@ void		init_win (char *line, t_data *data)
 
 	i = 1;
 	data->win.width = ft_atoi(&(line[i]));
+	data->win.width = (data->win.width > 2560) ? 2560 : data->win.width;
 	i++;
 	while (ft_isdigit(line[i]))
 		i++;
 	data->win.height = ft_atoi(&(line[i]));
+	data->win.height = (data->win.height > 1440) ? 1440 : data->win.height;
+	if (data->win.width < 100 || data->win.height < 100)
+	{
+		data->error.win = true;
+		exit_game(data);
+	}
 	init_mlx(data);
 }
+//
+// void		init_display(t_data *data)
+// {
+// 	if (!(data->display.img = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height)))
+// 		exit_game(data);
+// 	if (!(data->display.addr = mlx_get_data_addr(data->display.img, &data->display.bpp, &data->display.s_line, &data->display.endian)))
+// 		exit_game(data);
+// }
+//
+// void		init_map(t_data *data, char *line, int fd)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		width;
+// 	int		height;
+// 	int		h;
+// 	int		w;
+// 	char	*map;
+//
+// 	i = 0;
+// 	width = 0;
+// 	height = 1;
+// 	while (line[i])
+// 	{
+// 		if (line[i] == '0' || line[i] == '1' || line[i] == '2'|| line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'O')
+// 		{
+// 			width++;
+// 			i++;
+// 		}
+// 		else if (line[i] == ' ')
+// 			i++;
+// 		else
+// 			exit_game(data);
+// 	}
+// 	map = ft_strdup(line);
+//
+// 	while (get_next_line(fd, &line) == 1)
+// 	{
+// 		// map = ft_strjoin(map, "\n");
+// 		map = ft_strjoin(map, line);
+// 		height++;
+// 		free(line);
+// 	}
+// 	data->mapsize.width = width;
+// 	data->mapsize.height = height;
+// 	data->map = malloc(height * sizeof(char *));
+// 	data->*map = malloc(width * sizeof(char));
+//
+// 	i = 0;
+// 	h = 0;
+// 	while (map[i] && h < height)
+// 	{
+// 		w = 0;
+// 		while (map[i] && w < width)
+// 		{
+// 			if (ft_isdigit(map[i]))
+// 			{
+// 				data->map[h][w] = ft_atoi(map[i]);
+// 				w++;
+// 			}
+// 			else if (ft_isalpha(map[i]))
+// 			{
+// 				init_player(data, h, w, map[i]);
+// 				w++;
+// 			}
+// 			i++;
+// 		}
+// 		h++;
+// 	}
+// }
 
-void		init_map(t_data *data, char *line, int fd)
+void		init_player(t_data *data, int h, int w, char dir)
 {
-	int		i;
-	int		j;
-	// char	*map;
-	// int		width;
-	// int		height;
-	//
-	// width = 0;
-	// height = 1;
-	// while (line[i])
-	// {
-	// 	if (ft_isdigit(line[i]) || line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'O')
-	// 		width++;
-	// 	i++;
-	// }
-	// map = ft_strdup(line);
-	// free(line);
-	// while (get_next_line(fd, &line) == 1)
-	// {
-	// 	// printf ("%s\n\n", map);
-	// 	// // map = ft_strjoin(map, line);
-	// 	// height++;
-	// 	// free(line);
-	// }
-
-	i = 0;
-	while (i < 24)
+	data->player.pos.x = w;
+	data->player.pos.y = h;
+	if (dir == 'N')
 	{
-		j = 0;
-		while (j < 24)
-		{
-			data->map[i][j] = g_map[i][j];
-			j++;
-		}
-		i++;
+		data->player.dir.x = 0;
+		data->player.dir.y = -1;
 	}
-}
-
-void		init_player(t_data *data)
-{
-	data->player.pos.x = 22;
-	data->player.pos.y = 12;
-	data->player.dir.x = -1;
-	data->player.dir.y = 0;
+	else if (dir == 'S')
+	{
+		data->player.dir.x = 0;
+		data->player.dir.y = +1;
+	}
+	else if (dir == 'E')
+	{
+		data->player.dir.x = +1;
+		data->player.dir.y = 0;
+	}
+	else if (dir == 'W')
+	{
+		data->player.dir.x = -1;
+		data->player.dir.y = 0;
+	}
+	else
+		exit_game(data);
 	data->player.plane.x = 0;
 	data->player.plane.y = 0.66;
 	data->player.move_speed = 0.2;
 	data->player.rot_speed = 0.15;
 }
 
-void		init_tex(void *mlx_ptr, t_tex *tex, char *path)
-{
-	if (!(tex->img = mlx_xpm_file_to_image (mlx_ptr, path, &tex->width, &tex->height)))
-		return ;
-	if (!(tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->s_line, &tex->endian)))
-	return ;
-}
-
-void		init_display(t_data *data)
-{
-	if (!(data->display.img = mlx_new_image(data->mlx_ptr, data->win.width, data->win.height)))
-		return ;
-	if (!(data->display.addr = mlx_get_data_addr(data->display.img, &data->display.bpp, &data->display.s_line, &data->display.endian)))
-		return ;
-}
-
-void		init_color(char *line, t_color *color)
-{
-	int		i;
-
-	i = 0;
-	color->r = ft_atoi(&(line[i]));
-	while (ft_isdigit(line[i]))
-		i++;
-	while (!(ft_isdigit(line[i])))
-		i++;
-	color->g = ft_atoi(&(line[i]));
-	while (ft_isdigit(line[i]))
-		i++;
-	while (!(ft_isdigit(line[i])))
-		i++;
-	color->b = ft_atoi(&(line[i]));
-	printf("r: %d, g: %d, b: %d\n", color->r, color->g, color->b);
-}
-
-t_data		init(char **av)
+t_data		init_data(char **av, int fd)
 {
 	t_data		data;
-	int		fd;
-	char	*line;
+	char		*line;
 
-	if (!(av[1]) || (fd = open(av[1], O_RDONLY)) == -1)
-		exit_game(&data);
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (line[0] == 'R')
 			init_win(line, &data);
-		if (line[0] == 'N' && line[1] == 'O')
-			init_tex(data.mlx_ptr, &data.north, ft_strstr(line, "./"));
-		if ((line[0] == 'S' && line[1] == 'O'))
-			init_tex(data.mlx_ptr, &data.south, ft_strstr(line, "./"));
-		if ((line[0] == 'W' && line[1] == 'E'))
-			init_tex(data.mlx_ptr, &data.west, ft_strstr(line, "./"));
-		if ((line[0] == 'E' && line[1] == 'A'))
-			init_tex(data.mlx_ptr, &data.east, ft_strstr(line, "./"));
-		if (line[0] == 'S')
-			init_tex(data.mlx_ptr, &data.sprite, ft_strstr(line, "./"));
-		if (line[0] == 'F')
-			init_color(&line[2], &data.floor);
-		if (line[0] == 'C')
-			init_color(&line[2], &data.ceilling);
-		// if (line[0] == '1')
-		init_map(&data, line, fd);
+		else if (line[0] == 'N' && line[1] == 'O')
+			init_tex(&data, &data.north, ft_strstr(line, "./"));
+		else if ((line[0] == 'S' && line[1] == 'O'))
+			init_tex(&data, &data.south, ft_strstr(line, "./"));
+		else if ((line[0] == 'W' && line[1] == 'E'))
+			init_tex(&data, &data.west, ft_strstr(line, "./"));
+		else if ((line[0] == 'E' && line[1] == 'A'))
+			init_tex(&data, &data.east, ft_strstr(line, "./"));
+		// else if (line[0] == 'S')
+		// 	init_tex(&data, &data.sprite, ft_strstr(line, "./"));
+		else if (line[0] == 'F')
+			init_color(&data, &line[1], &data.floor);
+		else if (line[0] == 'C')
+			init_color(&data, &line[1], &data.ceilling);
+		// else if (line[0] == '1')
+		// 	init_map(&data, line, fd);
 		free(line);
 	}
-	init_tex(data.mlx_ptr, &data.sky, "textures/sky_1.xpm");
-	init_player(&data);
-	init_display(&data);
+	// init_display(&data);
 	return (data);
 }

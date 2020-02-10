@@ -14,7 +14,9 @@ INC			=	-I $(addprefix $(INC_DIR)/, $INC_NAME)
 # SOURCES
 SRC_DIR		=	./src
 SRC			=	main.c \
+				error.c \
 				init.c \
+				init_2.c \
 				raycast.c \
 				draw.c \
 				key.c \

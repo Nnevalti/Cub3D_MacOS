@@ -5,7 +5,9 @@ void	BMP_header(t_data *data, int fd)
 	int				file_size;
 	unsigned char	bmp[54];
 
-	file_size = (data->win.height * data->win.width * 3) + 54;
+	// file_size = (data->win.height * data->win.width * 3) + 54;
+	file_size = 54 + 3 * data->win.width * data->win.height +
+		((4 - (data->win.width * 3) % 4) % 4) * data->win.height;
 	// bmp signature (2 octets)
 	bmp[0] = 'B';
 	bmp[1] = 'M';
@@ -90,6 +92,10 @@ void	BMP_header(t_data *data, int fd)
     bmp[52] = 0;
     bmp[53] = 0;
 	write(fd, bmp, sizeof(bmp));
+	for (int i =0; i < 54; i++)
+	{
+		printf("%x / ", bmp[i]);
+	}
 }
 
 void	BMP_create(t_data	*data, char	*filename)
@@ -98,16 +104,16 @@ void	BMP_create(t_data	*data, char	*filename)
 	int		i;
 	int		img_size;
 
-	img_size = data->win.height * data->win.width * 3;
-	fd = open(filename, O_CREAT | O_APPEND | O_WRONLY, 0777);
+	img_size = data->win.height * data->win.width;
+	fd = open(filename, O_CREAT | O_WRONLY, 0777);
 	BMP_header(data, fd);
 	i = 0;
 	while (i < img_size)
 	{
-		write(fd, &(data->display.addr[i]), 1);
-		write(fd, &(data->display.addr[i + 1]), 1);
-		write(fd, &(data->display.addr[i + 2]), 1);
-		i += 4;
+		write(fd, &(data->display.addr[i * 4]), 1);
+		write(fd, &(data->display.addr[i * 4 + 1]), 1);
+		write(fd, &(data->display.addr[i * 4 + 2]), 1);
+		i++;
 	}
 	close(fd);
 }
