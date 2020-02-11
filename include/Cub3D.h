@@ -36,6 +36,7 @@ typedef struct	s_win
 {
 	int			height;
 	int			width;
+	t_bool		load;
 }				t_win;
 
 typedef struct	s_coord
@@ -97,6 +98,7 @@ typedef struct	s_tex
 	int		width;
 	int		endian;
 	int		s_line;
+	t_bool	load;
 }				t_tex;
 
 typedef struct	s_error
@@ -142,12 +144,17 @@ typedef struct	s_data
 
 void			init_error(t_data *data);
 void			check_error(t_data *data);
-void			check_textures(t_data *data);
+
+void			init_tex(t_data *data, t_tex *tex, char *path);
+char			*find_path(char *line);
+
+void			check_init(t_data *data);
 
 t_data			init_data(char **av, int fd);
-void			init_win (char *line, t_data *data);
-void			init_tex(t_data *data, t_tex *tex, char *path);
+void			init_win(char *line, t_data *data);
+
 void			init_color(t_data *data, char *line, t_color *color);
+
 void			raycast(t_data *data);
 int				game(t_data *data);
 void			draw_tex(int x, t_data *data);

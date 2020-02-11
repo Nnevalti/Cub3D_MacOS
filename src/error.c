@@ -7,6 +7,13 @@ void		init_error(t_data *data)
 	data->error.mlx = false;
 	data->error.tex = false;
 	data->error.rgb = false;
+
+	data->win.load = false;
+	data->north.load = false;
+	data->south.load = false;
+	data->east.load = false;
+	data->west.load = false;
+	data->sprite.load = false;
 }
 
 void	check_error(t_data *data)
@@ -33,18 +40,20 @@ void	check_error(t_data *data)
 	return ;
 }
 
-// void	check_textures(t_data *data)
-// {
-// 	if (!(data->north.path) || !(data->south.path) || !(data->east.path) || !(data->west.path) || !(data->sprite.path))
-// 	{
-// 		data->error.tex = true;
-// 		exit_game(data);
-// 	}
-// 	if (!(data->floor.r) || !(data->floor.g) || !(data->floor.b)
-// 		|| !(data->ceilling.r) || !(data->ceilling.g) || !(data->ceilling.b))
-// 	{
-// 		data->error.rgb = true;
-// 		exit_game(data);
-// 	}
-// 	return ;
-// }
+void	check_init(t_data *data)
+{
+	if (data->win.load == false)
+	{
+		data->error.win = true;
+		exit_game(data);
+	}
+	else if (data->north.load == false ||
+	data->south.load == false ||
+	data->east.load == false ||
+	data->west.load == false ||
+	data->sprite.load == false)
+	{
+		data->error.tex = true;
+		exit_game(data);
+	}
+}

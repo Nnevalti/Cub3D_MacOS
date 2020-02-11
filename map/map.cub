@@ -4,9 +4,9 @@ SO ./textures/wall_cartoon_2.xpm
 WE ./textures/wall_2.xpm
 EA ./textures/wall_cartoon_4.xpm
 
-S ./path_to_the_sprite_texture
+S ./textures/pillar.xpm
 F 220,100,255
-C 225,30,2220
+C 225,30,220
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1

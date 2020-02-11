@@ -1,12 +1,5 @@
 #include "../include/Cub3D.h"
 
-void		init_mlx(t_data *data)
-{
-	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.width, data->win.height, "Cub3D");
-}
-
-
 void		init_win (char *line, t_data *data)
 {
 	int		i;
@@ -24,7 +17,9 @@ void		init_win (char *line, t_data *data)
 		data->error.win = true;
 		exit_game(data);
 	}
-	init_mlx(data);
+
+	if ((data->win_ptr = mlx_new_window(data->mlx_ptr, data->win.width, data->win.height, "Cub3D")))
+		data->win.load = true;
 }
 //
 // void		init_display(t_data *data)
@@ -129,33 +124,39 @@ void		init_player(t_data *data, int h, int w, char dir)
 	data->player.rot_speed = 0.15;
 }
 
+void		line_parse(t_data *data, char *line)
+{
+	if (line[0] == 'R')
+		init_win(line, data);
+	if (line[0] == 'N' && line[1] == 'O')
+		init_tex(data, &data->north, find_path(&line[3]));
+	else if ((line[0] == 'S' && line[1] == 'O'))
+		init_tex(data, &data->south, find_path(&line[3]));
+	else if ((line[0] == 'W' && line[1] == 'E'))
+		init_tex(data, &data->west, find_path(&line[3]));
+	else if ((line[0] == 'E' && line[1] == 'A'))
+		init_tex(data, &data->east, find_path(&line[3]));
+	else if (line[0] == 'S')
+		init_tex(data, &data->sprite, find_path(&line[2]));
+	else if (line[0] == 'F')
+		init_color(data, &line[1], &data->floor);
+	else if (line[0] == 'C')
+		init_color(data, &line[1], &data->ceilling);
+	// else if (line[0] == '1')
+	// 	init_map(&data, line, fd);
+}
 t_data		init_data(char **av, int fd)
 {
 	t_data		data;
 	char		*line;
 
+	data.mlx_ptr = mlx_init();
 	while (get_next_line(fd, &line) == 1)
 	{
-		if (line[0] == 'R')
-			init_win(line, &data);
-		else if (line[0] == 'N' && line[1] == 'O')
-			init_tex(&data, &data.north, ft_strstr(line, "./"));
-		else if ((line[0] == 'S' && line[1] == 'O'))
-			init_tex(&data, &data.south, ft_strstr(line, "./"));
-		else if ((line[0] == 'W' && line[1] == 'E'))
-			init_tex(&data, &data.west, ft_strstr(line, "./"));
-		else if ((line[0] == 'E' && line[1] == 'A'))
-			init_tex(&data, &data.east, ft_strstr(line, "./"));
-		// else if (line[0] == 'S')
-		// 	init_tex(&data, &data.sprite, ft_strstr(line, "./"));
-		else if (line[0] == 'F')
-			init_color(&data, &line[1], &data.floor);
-		else if (line[0] == 'C')
-			init_color(&data, &line[1], &data.ceilling);
-		// else if (line[0] == '1')
-		// 	init_map(&data, line, fd);
+		line_parse(&data, line);
 		free(line);
 	}
+	check_init(&data);
 	// init_display(&data);
 	return (data);
 }
