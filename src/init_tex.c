@@ -1,5 +1,10 @@
 #include "../include/Cub3D.h"
 
+int			ft_isspace(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+
 int			is_path(char c, char *charset)
 {
 	int		i;
@@ -35,7 +40,7 @@ void		init_tex(t_data *data, t_tex *tex, char *path)
 	i = 0;
 	while (path[i])
 	{
-		if (path[i] == 32 || (path[i] >= 9 && path[i] <= 13))
+		if (ft_isspace(path[i]))
 		{
 			path[i] = '\0';
 			break;
@@ -61,24 +66,24 @@ void		init_color(t_data *data, char *line, t_color *color)
 	int		i;
 
 	i = 0;
-	// check_rgb(data, line);
-
+	check_rgb(data, line);
 	color->r = ft_atoi(&(line[i]));
-	while (ft_isdigit(line[i]))
+	while (ft_isdigit(line[i]) || ft_isspace(line[i]))
 		i++;
-	while (!(ft_isdigit(line[i])))
+	if (line[i] == ',')
 		i++;
 	color->g = ft_atoi(&(line[i]));
 	while (ft_isdigit(line[i]))
 		i++;
-	while (!(ft_isdigit(line[i])))
+	if (line[i] == ',')
 		i++;
 	color->b = ft_atoi(&(line[i]));
 	if (color->b < 0 || color->b > 255
 		|| color->r < 0 || color->r > 255
 		|| color->g < 0 || color->g > 255)
 	{
+		data->error.rgb = true;
 		exit_game(data);
 	}
-
+	color->load = true;
 }

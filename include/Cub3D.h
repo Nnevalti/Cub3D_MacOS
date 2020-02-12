@@ -87,6 +87,7 @@ typedef struct	s_color
 	int			r;
 	int			g;
 	int			b;
+	t_bool		load;
 }				t_color;
 
 typedef struct	s_tex
@@ -108,6 +109,7 @@ typedef struct	s_error
 	t_bool		win;
 	t_bool		tex;
 	t_bool		rgb;
+	t_bool		map;
 
 }				t_error;
 
@@ -117,8 +119,8 @@ typedef struct	s_data
 	void		*win_ptr;
 	t_error		error;
 	t_win		win;
+	int			file_line;
 
-	t_win		mapsize;
 	int			**map;
 
 	t_key		key;
@@ -144,10 +146,11 @@ typedef struct	s_data
 
 void			init_error(t_data *data);
 void			check_error(t_data *data);
-
+void			check_rgb(t_data *data, char *line);
 void			init_tex(t_data *data, t_tex *tex, char *path);
 char			*find_path(char *line);
 
+int				ft_isspace(char c);
 void			check_init(t_data *data);
 
 t_data			init_data(char **av, int fd);
