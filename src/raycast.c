@@ -45,23 +45,23 @@ void ray_step(t_data *data)
 
 void ray_hit(t_data *data)
 {
-			while (data->ray.hit == false)
-			{
-				if (data->ray.side_dist.x < data->ray.side_dist.y)
-				{
-					data->ray.side_dist.x += data->ray.delta_dist.x;
-					data->ray.mapX += data->ray.stepX;
-					data->ray.side = data->ray.dir.x > 0 ? N : S;
-				}
-				else
-				{
-					data->ray.side_dist.y += data->ray.delta_dist.y;
-					data->ray.mapY += data->ray.stepY;
-					data->ray.side = data->ray.dir.y > 0 ? E : O;
-				}
-				if (data->map[data->ray.mapX][data->ray.mapY] > 0)
-					data->ray.hit = true;
-			}
+	while (data->ray.hit == false)
+	{
+		if (data->ray.side_dist.x < data->ray.side_dist.y)
+		{
+			data->ray.side_dist.x += data->ray.delta_dist.x;
+			data->ray.mapX += data->ray.stepX;
+			data->ray.side = data->ray.dir.x > 0 ? N : S;
+		}
+		else
+		{
+			data->ray.side_dist.y += data->ray.delta_dist.y;
+			data->ray.mapY += data->ray.stepY;
+			data->ray.side = data->ray.dir.y > 0 ? E : O;
+		}
+		if (data->map[data->ray.mapX][data->ray.mapY] > 0)
+			data->ray.hit = true;
+	}
 }
 
 void wall_height(t_data *data) {
@@ -108,5 +108,5 @@ void	raycast(t_data *data)
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
-	draw_minimap(data, 24, 24, 3);
+	// draw_minimap(data, 24, 24, 3);
 }

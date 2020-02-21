@@ -36,28 +36,35 @@ void		init_player(t_data *data, int h, int w, char dir)
 	data->player.pos.y = h;
 	if (dir == 'N')
 	{
-		data->player.dir.x = 0;
-		data->player.dir.y = -1;
+		data->player.dir.x = -1;
+		data->player.dir.y = 0;
+		data->player.plane.x = 0;
+		data->player.plane.y = 0.66;
 	}
 	else if (dir == 'S')
 	{
-		data->player.dir.x = 0;
-		data->player.dir.y = +1;
+		data->player.dir.x = 1;
+		data->player.dir.y = 0;
+		data->player.plane.x = 0;
+		data->player.plane.y = -0.66;
 	}
 	else if (dir == 'E')
 	{
-		data->player.dir.x = +1;
-		data->player.dir.y = 0;
+		data->player.dir.x = 0;
+		data->player.dir.y = 1;
+		data->player.plane.x = 0.66;
+		data->player.plane.y = 0;
 	}
-	else if (dir == 'W')
+	else if (dir == 'O')
 	{
-		data->player.dir.x = -1;
-		data->player.dir.y = 0;
+		data->player.dir.x = 0;
+		data->player.dir.y = -1;
+		data->player.plane.x = -0.66;
+		data->player.plane.y = 0;
 	}
 	else
 		exit_game(data);
-	data->player.plane.x = 0;
-	data->player.plane.y = 0.66;
+
 	data->player.move_speed = 0.2;
 	data->player.rot_speed = 0.15;
 }
@@ -70,75 +77,7 @@ void		init_display(t_data *data)
 		exit_game(data);
 }
 
-// void		init_map(t_data *data, char *line, int fd)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		width;
-// 	int		height;
-// 	int		h;
-// 	int		w;
-// 	char	*map;
-// 	char	*tmp;
-//
-// 	i = 0;
-// 	width = 0;
-// 	height = 1;
-// 	check_init(data);
-// 	map = ft_strdup(line);
-//
-// 	while (get_next_line(fd, &line) == 1)
-// 	{
-// 		height++;
-// 		tmp = ft_strjoin(map, "\n");
-// 		free(map);
-// 		map = ft_strjoin(tmp, line);
-// 		free(tmp);
-// 		free(line);
-// 	}
-// 	printf("map : %s\n", map);
-// 	data->map = malloc(height * sizeof(char *));
-// 	while (line[i])
-// 	{
-// 		if (line[i] == '0' || line[i] == '1' || line[i] == '2'|| line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'O')
-// 		{
-// 			width++;
-// 			i++;
-// 		}
-// 		else if (line[i] == ' ')
-// 			i++;
-// 		else
-// 		{
-// 			data->error.map = true;
-// 			exit_game(data);
-// 		}
-// 	}
-// 	*data->map = malloc(width * sizeof(char));
-//
-// 	i = 0;
-// 	h = 0;
-// 	while (map[i] && h < height)
-// 	{
-// 		w = 0;
-// 		while (map[i] && w < width)
-// 		{
-// 			if (ft_isdigit(map[i]))
-// 			{
-// 				data->map[h][w] = ft_atoi(&map[i]);
-// 				w++;
-// 			}
-// 			else if (ft_isalpha(map[i]))
-// 			{
-// 				init_player(data, h, w, map[i]);
-// 				w++;
-// 			}
-// 			i++;
-// 		}
-// 		h++;
-// 	}
-// }
-
-void		line_parse(t_data *data, char *line, int fd)
+int			line_parse(t_data *data, char *line, int fd)
 {
 	if (line[0] == 'R')
 		init_win(line, data);
@@ -157,7 +96,11 @@ void		line_parse(t_data *data, char *line, int fd)
 	if (line[0] == 'C')
 		init_color(data, &line[1], &data->ceilling);
 	if (line[0] == '1')
+	{
 		init_map(data, line, fd);
+		return (0);
+	}
+	return (1);
 }
 t_data		init_data(char **av, int fd)
 {
@@ -169,9 +112,10 @@ t_data		init_data(char **av, int fd)
 	while (get_next_line(fd, &line) == 1)
 	{
 		data.file_line++;
-		line_parse(&data, line, fd);
-		free(line);
+		if (line_parse(&data, line, fd))
+			free(line);
 	}
+	// system("leaks Cub3D");
 	check_init(&data);
 	init_display(&data);
 	return (data);

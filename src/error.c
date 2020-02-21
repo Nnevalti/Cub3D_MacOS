@@ -103,7 +103,6 @@ void	check_init(t_data *data)
 	data->east.load == false ||
 	data->west.load == false ||
 	data->sprite.load == false ||
-	data->win.load == false ||
 	data->floor.load == false ||
 	data->ceilling.load == false)
 	{
