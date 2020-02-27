@@ -26,6 +26,7 @@ SRC			=	main.c \
 				mini_map.c \
 				bitmap_file.c \
 				exit_game.c \
+				utils.c \
 
 # OBJETS
 OBJS_NAME	=	$(SRC:.c=.o)
@@ -51,7 +52,9 @@ $(LIBFT)	:
 				@make -C $(FT_DIR)
 
 $(NAME)		:	$(OBJS)
-				$(CC) -fsanitize=address $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
+				$(CC) $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
+
+				# $(CC) -fsanitize=address $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
 
 clean		:
 				@rm -rf $(OBJS)

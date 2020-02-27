@@ -59,7 +59,7 @@ void ray_hit(t_data *data)
 			data->ray.mapY += data->ray.stepY;
 			data->ray.side = data->ray.dir.y > 0 ? E : O;
 		}
-		if (data->map[data->ray.mapX][data->ray.mapY] > 0)
+		if (data->map.map[data->ray.mapY][data->ray.mapX] > 0)
 			data->ray.hit = true;
 	}
 }
@@ -90,7 +90,7 @@ void wall_x(t_data *data) {
 	data->ray.wall_x -= floor(data->ray.wall_x);
 }
 
-void	raycast(t_data *data)
+void	draw_walls(t_data *data)
 {
 	int		x;
 
@@ -107,6 +107,12 @@ void	raycast(t_data *data)
 		draw_tex(x, data);
 		x++;
 	}
+}
+
+void	raycast(t_data *data)
+{
+	draw_walls(data);
+	// draw_sprites(data);
+	draw_minimap(data, 3);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
-	// draw_minimap(data, 24, 24, 3);
 }

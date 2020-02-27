@@ -47,12 +47,12 @@ typedef struct	s_coord
 
 typedef struct	s_key
 {
-	int		up;
-	int		down;
-	int		left;
-	int		right;
-	int		r_left;
-	int		r_right;
+	t_bool		up;
+	t_bool		down;
+	t_bool		left;
+	t_bool		right;
+	t_bool		r_left;
+	t_bool		r_right;
 }				t_key;
 
 typedef struct	s_player
@@ -62,6 +62,7 @@ typedef struct	s_player
 	t_coord		plane;
 	double		move_speed;
 	double		rot_speed;
+	t_bool		load;
 }				t_player;
 
 typedef struct	s_ray
@@ -108,10 +109,29 @@ typedef struct	s_error
 	t_bool		mlx;
 	t_bool		win;
 	t_bool		tex;
+	t_bool		loadtex;
 	t_bool		rgb;
+	t_bool		loadrgb;
 	t_bool		map;
+	t_bool		player;
+	t_bool		loadplayer;
 
 }				t_error;
+
+typedef struct	s_map
+{
+	int			**map;
+	int			height;
+	int			width;
+	t_bool		load;
+}				t_map;
+
+typedef struct	s_sprite
+{
+	t_coord		pos;
+	double		distance;
+	t_tex		texture;
+}				t_sprite;
 
 typedef struct	s_data
 {
@@ -120,8 +140,7 @@ typedef struct	s_data
 	t_error		error;
 	t_win		win;
 	int			file_line;
-	// int			map[24][24];
-	int			**map;
+	t_map		map;
 
 	t_key		key;
 
@@ -141,13 +160,14 @@ typedef struct	s_data
 	t_tex		east;
 	t_tex		sprite;
 
-
+	t_sprite	*sprites;
+	int			nb_sprites;
 }				t_data;
 
-int				check_file(char *file);
 void			init_error(t_data *data);
+void			init_load(t_data *data);
+
 void			check_error(t_data *data);
-void			check_rgb(t_data *data, char *line);
 void			init_tex(t_data *data, t_tex *tex, char *path);
 char			*find_path(char *line);
 
@@ -165,12 +185,19 @@ void			init_color(t_data *data, char *line, t_color *color);
 void			raycast(t_data *data);
 int				game(t_data *data);
 void			draw_tex(int x, t_data *data);
-void 			draw_minimap(t_data *data, int width, int height, int size);
+void			draw_rgb(t_data *data, t_color *color, int y, int x);
+void 			draw_minimap(t_data *data, int size);
 void			draw_square(t_data *data, int x, int y, int size, int color);
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);
 void			BMP_create(t_data	*data, char	*filename);
+void			free_map(t_data *data, int line);
 int				exit_game(t_data *data);
+
+int				ft_isspace(char c);
+int				is_charset(char c, char *charset);
+int				ft_strlen_nospace(char *s1);
+char			*ft_strdup_nospace(char *s1);
 
 #endif

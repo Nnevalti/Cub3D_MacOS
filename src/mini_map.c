@@ -11,14 +11,19 @@ void	draw_square(t_data *data, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i, color);
+			data->display.addr[(x + j) * (data->display.bpp >> 3)
+			+ (y + i) * data->display.s_line] = color & 0xFF;
+			data->display.addr[(x + j) * (data->display.bpp >> 3)
+			+ (y + i) * data->display.s_line + 1] = (color >> 8) & 0xFF;
+			data->display.addr[(x + j) * (data->display.bpp >> 3)
+			+ (y + i) * data->display.s_line + 2] = (color >> 16) & 0xFF;
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_minimap(t_data *data, int width, int height, int size)
+void	draw_minimap(t_data *data, int size)
 {
 	int		i;
 	int		j;
@@ -26,19 +31,23 @@ void	draw_minimap(t_data *data, int width, int height, int size)
 
 	offset = 20;
 	i = 0;
-	while (i < height)
+	while (i < data->map.height)
 	{
 		j = 0;
-		while (j < width)
+		while (j < data->map.width)
 		{
-			if (i == (int)data->player.pos.x && j == (int)data->player.pos.y)
-				draw_square(data, j * size + offset, i * size + offset, size, 0x66CC0000);
-			else if (data->map[i][j] == 0)
-				draw_square(data, j * size + offset, i * size + offset, size, 0xAACCCCCC);
-			else if (data->map[i][j] == 1)
-				draw_square(data, j * size + offset, i * size + offset, size, 0x66000000);
-			else if (data->map[i][j] == 2)
-				draw_square(data, j * size + offset, i * size + offset, size, 0xAA009933);
+			if (i == (int)data->player.pos.y && j == (int)data->player.pos.x)
+				draw_square(data, j * size + offset, i * size + offset,
+					size, 0xCC0000);
+			else if (data->map.map[i][j] == 0)
+				draw_square(data, j * size + offset, i * size + offset,
+					size, 0xCCCCCC);
+			else if (data->map.map[i][j] == 1)
+				draw_square(data, j * size + offset, i * size + offset,
+					size, 0x000000);
+			else if (data->map.map[i][j] == 2)
+				draw_square(data, j * size + offset, i * size + offset,
+					size, 0x009933);
 			j++;
 		}
 		i++;

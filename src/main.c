@@ -10,22 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/Cub3D.h"
-
-int		check_file(char *file)
-{
-	int		i;
-
-	i = 0;
-	while(file[i])
-	{
-		if (!(ft_strcmp((file + ft_strlen(file) - 4), ".cub")))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int		main(int ac, char **av)
 {
@@ -34,7 +19,8 @@ int		main(int ac, char **av)
 
 	(void)ac;
 	init_error(&data);
-	if (!(av[1]) || !(check_file(av[1]))
+	init_load(&data);
+	if (!(av[1]) || ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub")
 		|| (fd = open(av[1], O_RDONLY)) == -1)
 	{
 		data.error.file = true;
@@ -42,12 +28,15 @@ int		main(int ac, char **av)
 	}
 	data = init_data(av, fd);
 	raycast(&data);
-	// mlx_do_key_autorepeatoff(data.mlx_ptr);
+	if (av[2] && !(ft_strcmp((av[2]), "--save")))
+	{
+		BMP_create(&data, "test.bmp");
+		exit_game(&data);
+	}
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 	mlx_hook(data.win_ptr, 3, 0, key_released, &data);
 	mlx_hook(data.win_ptr, 17, 0, exit_game, &data);
 	mlx_loop_hook(data.mlx_ptr, game, &data);
 	mlx_loop(data.mlx_ptr);
-	// system("leaks Cub3D");
 	return (0);
 }
