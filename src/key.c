@@ -18,6 +18,8 @@ int		key_pressed(int key, t_data *data)
 		data->key.right = true;
 	else if (key == 257)
 		data->player.move_speed = 0.12;
+	else if (key == 8)
+		BMP_create(data, "screenshot_c.bmp");
 	return (0);
 }
 

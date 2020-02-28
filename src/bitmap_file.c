@@ -62,5 +62,6 @@ void	BMP_create(t_data	*data, char	*filename)
 		}
 		i--;
 	}
+	data->bmp_index++;
 	close(fd);
 }

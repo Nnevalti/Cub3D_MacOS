@@ -140,6 +140,7 @@ typedef struct	s_data
 	t_error		error;
 	t_win		win;
 	int			file_line;
+	int			bmp_index;
 	t_map		map;
 
 	t_key		key;
@@ -164,26 +165,22 @@ typedef struct	s_data
 	int			nb_sprites;
 }				t_data;
 
-void			init_error(t_data *data);
+void			error_msg(t_data *data, char *msg, t_bool aff_line);
 void			init_load(t_data *data);
-
-void			check_error(t_data *data);
+t_data			init_data(char **av, int fd);
+void			init_win(char *line, t_data *data);
 void			init_tex(t_data *data, t_tex *tex, char *path);
-char			*find_path(char *line);
-
+void			init_color(t_data *data, char *line, t_color *color);
 void			init_map(t_data *data, char *line, int fd);
 void			init_player(t_data *data, int h, int w, char dir);
+
+void			raycast(t_data *data);
+
+char			*find_path(char *line);
 
 int				ft_isspace(char c);
 void			check_init(t_data *data);
 
-t_data			init_data(char **av, int fd);
-void			init_win(char *line, t_data *data);
-
-void			init_color(t_data *data, char *line, t_color *color);
-
-void			raycast(t_data *data);
-int				game(t_data *data);
 void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);
 void 			draw_minimap(t_data *data, int size);

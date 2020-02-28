@@ -38,7 +38,6 @@ int		exit_game(t_data *data)
 		free_tex(data);
 	if (data->win.load == true)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	check_error(data);
-	system("leaks Cub3D");
+	// system("leaks Cub3D");
 	exit (0);
 }

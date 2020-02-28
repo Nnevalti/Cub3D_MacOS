@@ -20,7 +20,6 @@ SRC			=	main.c \
 				init_map.c \
 				raycast.c \
 				draw.c \
-				game.c \
 				key.c \
 				move.c \
 				mini_map.c \

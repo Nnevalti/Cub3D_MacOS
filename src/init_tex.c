@@ -30,16 +30,10 @@ void		init_tex(t_data *data, t_tex *tex, char *path)
 	}
 	if (!(tex->img = mlx_xpm_file_to_image(data->mlx_ptr,
 		path, &tex->width, &tex->height)))
-	{
-		data->error.tex = true;
-		exit_game(data);
-	}
+		error_msg(data, "Textures path is wrong", true);
 	if (!(tex->addr = mlx_get_data_addr(tex->img,
 		&tex->bpp, &tex->s_line, &tex->endian)))
-	{
-		data->error.mlx = true;
-		exit_game(data);
-	}
+		error_msg(data, "MLX don't work for tex", false);
 	tex->load = true;
 }
 
@@ -51,10 +45,7 @@ void		check_rgb(t_data *data, char *rgb)
 	while (rgb[i])
 	{
 		if (!is_charset(rgb[i], "0123456789,"))
-		{
-			data->error.rgb = true;
-			exit_game(data);
-		}
+			error_msg(data, "RGB values are wrong", true);
 		i++;
 	}
 }
@@ -79,10 +70,7 @@ void		get_color(t_data *data, t_color *color, char *rgb)
 	color->b = ft_atoi(&(rgb[i]));
 	if (color->b < 0 || color->b > 255 || color->r < 0 || color->r > 255
 		|| color->g < 0 || color->g > 255 || rgb[i] != '\0')
-	{
-		data->error.rgb = true;
-		exit_game(data);
-	}
+		error_msg(data, "RGB values are wrong", true);
 	color->load = true;
 }
 

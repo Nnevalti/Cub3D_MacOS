@@ -17,55 +17,10 @@ void		init_win(char *line, t_data *data)
 		i++;
 	if (data->win.load == true || line[i] != '\0'
 		|| data->win.width < 100 || data->win.height < 100)
-	{
-		data->error.win = true;
-		exit_game(data);
-	}
+		error_msg(data, "Windows resolution is invalid", true);
 	if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
 		data->win.width, data->win.height, "Cub3D")))
 		data->win.load = true;
-}
-
-void		init_player(t_data *data, int h, int w, char dir)
-{
-	if (data->player.load == true)
-	{
-		data->error.player = true;
-		exit_game(data);
-	}
-	if (dir == 'N')
-	{
-		data->player.dir.x = 0;
-		data->player.dir.y = -1;
-		data->player.plane.x = 0.66;
-		data->player.plane.y = 0;
-	}
-	else if (dir == 'S')
-	{
-		data->player.dir.x = 0;
-		data->player.dir.y = 1;
-		data->player.plane.x = -0.66;
-		data->player.plane.y = 0;
-	}
-	else if (dir == 'E')
-	{
-		data->player.dir.x = 1;
-		data->player.dir.y = 0;
-		data->player.plane.x = 0;
-		data->player.plane.y = 0.66;
-	}
-	else if (dir == 'W')
-	{
-		data->player.dir.x = -1;
-		data->player.dir.y = 0;
-		data->player.plane.x = 0;
-		data->player.plane.y = -0.66;
-	}
-	data->player.pos.x = w;
-	data->player.pos.y = h;
-	data->player.move_speed = 0.08;
-	data->player.rot_speed = 0.1;
-	data->player.load = true;
 }
 
 void		init_display(t_data *data)

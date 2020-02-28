@@ -1,25 +1,5 @@
 #include "../include/Cub3D.h"
 
-void		affich_map(t_data *data, int **map)
-{
-	int		i;
-	int		j;
-
-	printf("map array\n");
-	i = 0;
-	while (i < data->map.height)
-	{
-		j = 0;
-		while (j < data->map.width)
-		{
-			printf("%d", map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
 void		fill_map(t_data *data, char *map)
 {
 	int		i;
@@ -34,26 +14,23 @@ void		fill_map(t_data *data, char *map)
 		w = 0;
 		while (w < data->map.width)
 		{
-			if (map[i] == '0' || map[i] == '1' || map[i] == '2'|| map[i] == 'N' || map[i] == 'S' || map[i] == 'E' || map[i] == 'W')
+			if (is_charset(map[i], "012"))
 			{
-				if (ft_isdigit(map[i]))
-					data->map.map[h][w] = map[i] - '0';
-				else if (ft_isalpha(map[i]))
-				{
-					init_player(data, h, w, map[i]);
-					data->map.map[h][w] = 0;
-				}
+				data->map.map[h][w] = map[i] - '0';
 				if (map[i] == '2')
 					data->nb_sprites++;
 				i++;
 			}
-			else if (map[i] == '\n' || map[i] == '\0')
+			else if (is_charset(map[i], "NSEW"))
+			{
+				init_player(data, h, w, map[i]);
+				data->map.map[h][w] = 0;
+				i++;
+			}
+			else if (is_charset(map[i], "\n\0"))
 				data->map.map[h][w] = -1;
 			else
-			{
-				data->error.map = true;
-				exit_game(data);
-			}
+				error_msg(data, "Map is invalid", true);
 			w++;
 		}
 		if (map[i] != '\0')
@@ -68,71 +45,59 @@ void		malloc_map(t_data *data)
 
 	h = 0;
 	if (!(data->map.map = (int **)malloc(data->map.height * sizeof(int *))))
-	{
-		data->error.map = true;
 		exit_game(data);
-	}
 	while (h < data->map.height)
-	{
-		if(!(data->map.map[h] = malloc(data->map.width * sizeof(int))))
-		{
-			data->error.map = true;
+		if(!(data->map.map[h++] = malloc(data->map.width * sizeof(int))))
 			exit_game(data);
-		}
-		h++;
-	}
 }
 
-int			line_check(t_data *data, char *str)
+int			row_check(t_data *data, char *str)
 {
 	int		i;
 
 	i = 0;
 	while (str[i])
-	{
-		if (str[i] != '1')
+		if (str[i++] != '1')
 			return (true);
-		i++;
-	}
 	return (false);
 }
 
-int			left_check(t_data *data, char **map)
+int			column_check(t_data *data, char **map, int i, int j)
 {
-	int		h;
+	int		min;
 
-	h = 0;
-	while (h < data->map.height)
-	{
-		if (map[h][0] != '1')
-			return (true);
-		h++;
-	}
-	return (false);
+	min = ft_strlen(map[i - 1]) < ft_strlen(map[i + 1])
+		? ft_strlen(map[i - 1]) : ft_strlen(map[i + 1]);
+	if ((j == 0 || (j >= min && j < ft_strlen(map[i]))) &&
+		map[i][j] != '1')
+		return (false);
+	return (true);
 }
-
-// int			right_check(t_data *data, char **map)
-// {
-// 	int		i;
-//
-// 	i = 1;
-// 	while (map[i])
-// 	{
-// 		if (ft_strlen(map[i]) == ft_strlen(map[i - 1]))
-// 		i++;
-// 	}
-// }
 
 void		check_map(t_data *data, char **map)
 {
-	if (line_check(data, map[0])
-		|| line_check(data, map[data->map.height - 1])
-		|| left_check(data, map))
+	int		i;
+	int		j;
+
+	if (row_check(data, map[0])
+		|| row_check(data, map[data->map.height - 1]))
+		error_msg(data, "Map is invalid", true);
+	i = 1;
+	while (i < data->map.height - 1)
 	{
-		data->error.map = true;
-		exit_game(data);
+		j = 0;
+		while (j < ft_strlen(map[i]))
+		{
+			if (!(column_check(data, map, i, j)))
+				error_msg(data, "Map is invalid", true);
+			j++;
+		}
+		free(map[i]);
+		i++;
 	}
-	// || right_check(data, map)
+	free(map[0]);
+	free(map[i]);
+	free(map);
 }
 
 void		init_sprites(t_data *data)
@@ -176,21 +141,23 @@ void		create_map(t_data *data, int fd, char *line)
 	while (get_next_line(fd, &line) == 1)
 	{
 		tmp = ft_strjoin(map, "\n");
-		free(map);
 		tmp2 = ft_strdup_nospace(line);
+		if (tmp2[0] == '\0')
+			error_msg(data, "Empty line in map", false);
 		data->map.width = ft_strlen(tmp2) > data->map.width
 			? ft_strlen(tmp2) : data->map.width;
-		free(line);
+		free(map);
 		map = ft_strjoin(tmp, tmp2);
 		free(tmp);
 		free(tmp2);
+		free(line);
 		data->map.height++;
 	}
 	free(line);
 	malloc_map(data);
 	fill_map(data, map);
 	init_sprites(data);
-	// check_map(data, ft_split(map, '\n'));
+	check_map(data, ft_split(map, '\n'));
 	data->map.load = true;
 	free(map);
 }
@@ -199,5 +166,4 @@ void		init_map(t_data *data, char *line, int fd)
 {
 	check_init(data);
 	create_map(data, fd, line);
-	// affich_map(data, data->map.map);
 }
