@@ -20,7 +20,10 @@ void		init_win(char *line, t_data *data)
 		error_msg(data, "Windows resolution is invalid", true);
 	if ((data->win_ptr = mlx_new_window(data->mlx_ptr,
 		data->win.width, data->win.height, "Cub3D")))
+	{
 		data->win.load = true;
+		data->depth_buffer = malloc(data->win.width * sizeof(int));
+	}
 }
 
 void		init_display(t_data *data)

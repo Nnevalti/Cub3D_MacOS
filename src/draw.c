@@ -49,7 +49,7 @@ void	get_tex(t_data *data, int y, int x)
 		draw_wall(data, &data->south, y, x);
 	else if (data->ray.side == E)
 		draw_wall(data, &data->east, y, x);
-	else if (data->ray.side == O)
+	else if (data->ray.side == W)
 		draw_wall(data, &data->west, y, x);
 }
 

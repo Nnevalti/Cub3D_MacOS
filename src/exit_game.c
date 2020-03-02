@@ -1,16 +1,17 @@
 #include "../include/Cub3D.h"
 
-// void	free_map(t_data *data, int line)
-// {
-// 	int		i;
-//
-// 	i = 0;
-// 	while (i < line)
-// 	{
-// 		free(data->map.map[i]);
-// 	}
-// 	free(data->map.map);
-// }
+void	free_map(t_data *data, int line)
+{
+	int		i;
+
+	i = 0;
+	while (i < line)
+	{
+		free(data->map.map[i]);
+		i++;
+	}
+	free(data->map.map);
+}
 
 void	free_tex(t_data *data)
 {
@@ -30,14 +31,13 @@ void	free_tex(t_data *data)
 
 int		exit_game(t_data *data)
 {
-	// if (data->map.load == true)
-	// 	free_map(data, data->map.height);
-	if (data->north.load == true || data->south.load == true
-	|| data->east.load == true || data->west.load == true
-	|| data->sprite.load == true || data->display.load == true)
-		free_tex(data);
+	if (data->map.load == true)
+		free_map(data, data->map.height);
+	free_tex(data);
+	if (data->depth_buffer)
+		free(data->depth_buffer);
 	if (data->win.load == true)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// system("leaks Cub3D");
+	system("leaks Cub3D");
 	exit (0);
 }

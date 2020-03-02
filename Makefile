@@ -16,8 +16,10 @@ SRC_DIR		=	./src
 SRC			=	main.c \
 				error.c \
 				init.c \
+				init2.c \
 				init_tex.c \
 				init_map.c \
+				sprites.c \
 				raycast.c \
 				draw.c \
 				key.c \

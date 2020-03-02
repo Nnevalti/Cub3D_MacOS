@@ -29,7 +29,7 @@ typedef enum	e_side
 				N,
 				S,
 				E,
-				O
+				W
 }				t_side;
 
 typedef struct	s_win
@@ -161,6 +161,7 @@ typedef struct	s_data
 	t_tex		east;
 	t_tex		sprite;
 
+	int			*depth_buffer;
 	t_sprite	*sprites;
 	int			nb_sprites;
 }				t_data;
@@ -183,6 +184,7 @@ void			check_init(t_data *data);
 
 void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);
+void			draw_sprites(t_data *data);
 void 			draw_minimap(t_data *data, int size);
 void			draw_square(t_data *data, int x, int y, int size, int color);
 int				key_pressed(int key, t_data *data);
