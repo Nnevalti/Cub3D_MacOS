@@ -1,39 +1,45 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 17:51:17 by vdescham          #+#    #+#             */
-/*   Updated: 2020/03/02 17:51:19 by vdescham         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/Cub3D.h"
 
-void	up(t_data *data) {
+void up(t_data *data) {
 	if(data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x + data->player.dir.x * data->player.move_speed)] == false) data->player.pos.x += data->player.dir.x * data->player.move_speed;
 	if(data->map.map[(int)(data->player.pos.y + data->player.dir.y * data->player.move_speed)][(int)(data->player.pos.x)] == false) data->player.pos.y += data->player.dir.y * data->player.move_speed;
 }
 
-void	down(t_data *data) {
+void down(t_data *data) {
 	if(data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x - data->player.dir.x * data->player.move_speed)] == false) data->player.pos.x -= data->player.dir.x * data->player.move_speed;
 	if(data->map.map[(int)(data->player.pos.y - data->player.dir.y * data->player.move_speed)][(int)(data->player.pos.x)] == false) data->player.pos.y -= data->player.dir.y * data->player.move_speed;
 }
 
-void	right(t_data *data) {
+void right(t_data *data) {
 		if(data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x + data->player.plane.x * data->player.move_speed)] == false)
 			data->player.pos.x += data->player.plane.x * data->player.move_speed;
 		if(data->map.map[(int)(data->player.pos.y + data->player.plane.y * data->player.move_speed)][(int)data->player.pos.x] == false)
 			data->player.pos.y += data->player.plane.y * data->player.move_speed;
 }
 
-void	left(t_data *data) {
+void left(t_data *data) {
 		if(data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x - data->player.plane.x * data->player.move_speed)] == false)
 			data->player.pos.x -= data->player.plane.x * data->player.move_speed;
 		if(data->map.map[(int)(data->player.pos.y - data->player.plane.y * data->player.move_speed)][(int)data->player.pos.x] == false)
 			data->player.pos.y -= data->player.plane.y * data->player.move_speed;
+}
+
+void r_left(t_data *data) {
+	double oldDirX =  data->player.dir.x;
+	 data->player.dir.x =  data->player.dir.x * cos(-data->player.rot_speed) -  data->player.dir.y * sin(-data->player.rot_speed);
+	 data->player.dir.y = oldDirX * sin(-data->player.rot_speed) +  data->player.dir.y * cos(-data->player.rot_speed);
+	double oldPlaneX =  data->player.plane.x;
+	data->player.plane.x = data->player.plane.x * cos(-data->player.rot_speed) - data->player.plane.y * sin(-data->player.rot_speed);
+	data->player.plane.y = oldPlaneX * sin(-data->player.rot_speed) + data->player.plane.y * cos(-data->player.rot_speed);
+}
+
+void r_right(t_data *data) {
+	double oldDirX =  data->player.dir.x;
+	data->player.dir.x =  data->player.dir.x * cos(data->player.rot_speed) - data->player.dir.y * sin(data->player.rot_speed);
+	 data->player.dir.y = oldDirX * sin(data->player.rot_speed) + data->player.dir.y * cos(data->player.rot_speed);
+	double oldPlaneX = data->player.plane.x;
+	data->player.plane.x = data->player.plane.x * cos(data->player.rot_speed) - data->player.plane.y * sin(data->player.rot_speed);
+	data->player.plane.y = oldPlaneX * sin(data->player.rot_speed) + data->player.plane.y * cos(data->player.rot_speed);
 }
 
 int		move_player(t_data *data)

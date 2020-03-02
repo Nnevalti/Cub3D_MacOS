@@ -1,18 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 17:50:36 by vdescham          #+#    #+#             */
-/*   Updated: 2020/03/02 17:50:37 by vdescham         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/Cub3D.h"
 
-void	ray_step(t_data *data)
+void init_raycasting(t_data *data)
+{
+	data->ray.dir.x = data->player.dir.x
+	+ data->player.plane.x * data->cam.x;
+	data->ray.dir.y = data->player.dir.y
+	+ data->player.plane.y * data->cam.x;
+
+	data->ray.mapX = (int)data->player.pos.x;
+	data->ray.mapY = (int)data->player.pos.y;
+
+	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
+	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+
+}
+
+void ray_step(t_data *data)
 {
 	if (data->ray.dir.x < 0)
 	{
@@ -40,7 +43,7 @@ void	ray_step(t_data *data)
 	}
 }
 
-void	ray_hit(t_data *data)
+void ray_hit(t_data *data)
 {
 	while (data->ray.hit == false)
 	{
@@ -61,8 +64,7 @@ void	ray_hit(t_data *data)
 	}
 }
 
-void	wall_x(t_data *data)
-{
+void wall_height(t_data *data) {
 	if (data->ray.side == 0 || data->ray.side == 1)
 	{
 		data->ray.wall_dist = (data->ray.mapX - data->player.pos.x
@@ -76,6 +78,9 @@ void	wall_x(t_data *data)
 	data->ray.line_height = (int)(data->win.height / data->ray.wall_dist);
 	data->ray.wall_start = -data->ray.line_height / 2 + data->win.height / 2;
 	data->ray.wall_end = data->ray.line_height / 2 + data->win.height / 2;
+}
+
+void wall_x(t_data *data) {
 	if (data->ray.side == 0 || data->ray.side == 1)
 		data->ray.wall_x = data->player.pos.y + data->ray.wall_dist
 			* data->ray.dir.y;
@@ -94,16 +99,10 @@ void	draw_walls(t_data *data)
 	{
 		data->cam.x = 2 * x / (double)data->win.width - 1;
 		data->ray.hit = false;
-		data->ray.dir.x = data->player.dir.x
-		+ data->player.plane.x * data->cam.x;
-		data->ray.dir.y = data->player.dir.y
-		+ data->player.plane.y * data->cam.x;
-		data->ray.mapX = (int)data->player.pos.x;
-		data->ray.mapY = (int)data->player.pos.y;
-		data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
-		data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+		init_raycasting(data);
 		ray_step(data);
 		ray_hit(data);
+		wall_height(data);
 		wall_x(data);
 		draw_tex(x, data);
 		data->depth_buffer[x] = data->ray.wall_dist;
@@ -115,6 +114,6 @@ void	raycast(t_data *data)
 {
 	draw_walls(data);
 	draw_sprites(data);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->display.img, 0, 0);
+	draw_minimap(data, 3);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->display.img, 0, 0);
 }

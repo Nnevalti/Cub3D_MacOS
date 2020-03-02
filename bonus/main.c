@@ -6,7 +6,7 @@
 /*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 12:48:05 by vdescham          #+#    #+#             */
-/*   Updated: 2020/03/02 17:50:29 by vdescham         ###   ########.fr       */
+/*   Updated: 2019/11/26 11:41:48 by vdescham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		main(int ac, char **av)
 	raycast(&data);
 	if (av[2] && !(ft_strcmp((av[2]), "--save")))
 	{
-		bmp_create(&data, "screenshots/screenshot.bmp");
+		BMP_create(&data, "screenshot.bmp");
 		exit_game(&data);
 	}
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);

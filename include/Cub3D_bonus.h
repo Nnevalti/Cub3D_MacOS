@@ -140,6 +140,7 @@ typedef struct	s_data
 	t_error		error;
 	t_win		win;
 	int			file_line;
+	int			bmp_index;
 	t_map		map;
 
 	t_key		key;
@@ -152,6 +153,8 @@ typedef struct	s_data
 	t_tex		display;
 	t_color		floor;
 	t_color		ceilling;
+	// t_tex		sky;
+	// t_tex		ground;
 	t_tex		north;
 	t_tex		south;
 	t_tex		west;
@@ -171,9 +174,6 @@ void			init_tex(t_data *data, t_tex *tex, char *path);
 void			init_color(t_data *data, char *line, t_color *color);
 void			init_map(t_data *data, char *line, int fd);
 void			init_player(t_data *data, int h, int w, char dir);
-void			init_sprites(t_data *data);
-void			check_map(t_data *data, char **map);
-void			malloc_map(t_data *data);
 
 void			raycast(t_data *data);
 
@@ -181,7 +181,6 @@ char			*find_path(char *line);
 
 int				ft_isspace(char c);
 void			check_init(t_data *data);
-
 
 void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);

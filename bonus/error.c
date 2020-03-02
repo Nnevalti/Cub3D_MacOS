@@ -1,19 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 17:49:54 by vdescham          #+#    #+#             */
-/*   Updated: 2020/03/02 17:49:57 by vdescham         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/Cub3D.h"
 
 void		init_load(t_data *data)
 {
+	data->bmp_index = 0;
 	data->win.load = false;
 	data->north.load = false;
 	data->south.load = false;
@@ -43,9 +32,9 @@ void		error_msg(t_data *data, char *msg, t_bool aff_line)
 	exit_game(data);
 }
 
-void		check_init(t_data *data)
+void	check_init(t_data *data)
 {
-	if (data->win.load == false)
+ 	if (data->win.load == false)
 		error_msg(data, "Windows resolution is missing", false);
 	else if (data->north.load == false || data->south.load == false ||
 	data->east.load == false || data->west.load == false ||

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bitmap_file.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 17:49:35 by vdescham          #+#    #+#             */
+/*   Updated: 2020/03/02 17:49:38 by vdescham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/Cub3D.h"
 
 void	number_to_mem(char *dest, int nb, int nb_bytes)
@@ -38,14 +50,12 @@ void	write_bmp_header(t_data *data, int fd)
 	write(fd, header, 54);
 }
 
-void	BMP_create(t_data	*data, char	*filename)
+void	bmp_create(t_data *data, char *filename)
 {
 	int		fd;
 	int		i;
 	int		j;
-	int		img_size;
 
-	img_size = data->win.height * data->win.width;
 	fd = open(filename, O_CREAT | O_WRONLY, 0777);
 	write_bmp_header(data, fd);
 	i = data->win.height - 1;
@@ -54,14 +64,17 @@ void	BMP_create(t_data	*data, char	*filename)
 		j = 0;
 		while (j < data->win.width)
 		{
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 1 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 2 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 3 + data->display.s_line * i]), 1);
+			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
+			+ data->display.s_line * i]), 1);
+			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
+			+ 1 + data->display.s_line * i]), 1);
+			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
+			+ 2 + data->display.s_line * i]), 1);
+			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
+			+ 3 + data->display.s_line * i]), 1);
 			j++;
 		}
 		i--;
 	}
-	data->bmp_index++;
 	close(fd);
 }

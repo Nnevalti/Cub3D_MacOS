@@ -9,8 +9,9 @@ $(CFLAGS)	:
 
 # HEADER
 INC_DIR		=	./include
-INC_NAME	=	Cub3D.h \
+INC_NAME	=	Cub3D.h
 INC			=	-I $(addprefix $(INC_DIR)/, $INC_NAME)
+
 # SOURCES
 SRC_DIR		=	./src
 SRC			=	main.c \
@@ -19,12 +20,13 @@ SRC			=	main.c \
 				init2.c \
 				init_tex.c \
 				init_map.c \
+				init_map2.c \
 				sprites.c \
 				raycast.c \
 				draw.c \
 				key.c \
 				move.c \
-				mini_map.c \
+				move2.c \
 				bitmap_file.c \
 				exit_game.c \
 				utils.c \
@@ -45,6 +47,36 @@ FT_INC		=	-I $(FT_DIR)
 FT_LNK		=	-L $(FT_DIR) -lft
 LIBFT		=	$(addprefix $(FT_DIR), libft.a)
 
+
+# BONUS
+BNS_DIR		=	./bonus
+BNS			=	main.c \
+				error.c \
+				init.c \
+				init2.c \
+				init_tex.c \
+				init_map.c \
+				sprites.c \
+				raycast.c \
+				draw.c \
+				key.c \
+				move.c \
+				mini_map.c \
+				bitmap_file.c \
+				exit_game.c \
+				utils.c \
+
+# OBJETS BNS
+OBJS_NAME_B	=	$(BNS:.c=.o)
+OBJS_BNS	=	$(addprefix $(BNS_DIR)/, $(OBJS_NAME_B))
+
+# LIBFT LIB BONUS
+FT_DIR_BNS		=	$(addprefix $(BNS_DIR)/, libft)
+FT_INC_BNS		=	-I $(FT_DIR_BNS)
+FT_LNK_BNS		=	-L $(FT_DIR_BNS) -lft
+LIBFT_BNS		=	$(addprefix $(FT_DIR_BNS), libft.a)
+
+
 # RULES
 all			:	$(LIBFT) $(NAME)
 
@@ -55,17 +87,22 @@ $(LIBFT)	:
 $(NAME)		:	$(OBJS)
 				$(CC) $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
 
-				# $(CC) -fsanitize=address $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) $(addprefix $(SRC_DIR)/, $(SRC)) $(FT_LNK) $(MLX_LNK) -o $(NAME)
+bonus		:	$(OBJS_BNS)
+				@echo "\nCompiling $(FT_DIR)..."
+				@make -C $(FT_DIR_BNS)
+				$(CC) $(CFLAGS) $(INC) $(FT_INC_BNS) $(MLX_INC) $(addprefix $(BNS_DIR)/, $(BNS)) $(FT_LNK_BNS) $(MLX_LNK) -o $(NAME)
 
 clean		:
 				@rm -rf $(OBJS)
+				@rm -rf $(OBJS_BNS)
 				make clean -C $(FT_DIR)
+				make clean -C $(FT_DIR_BNS)
 
 fclean		:	clean
 				@echo "\nCleaning Directories..."
 				rm -f $(NAME)
 				rm -f libmlx.dylib
 				make fclean -C $(FT_DIR)
-				make clean -C $(MLX_DIR)
+				make fclean -C $(FT_DIR_BNS)
 
 re			:	fclean all

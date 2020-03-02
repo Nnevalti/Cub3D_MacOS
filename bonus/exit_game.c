@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit_game.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 17:50:54 by vdescham          #+#    #+#             */
-/*   Updated: 2020/03/02 17:50:56 by vdescham         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/Cub3D.h"
 
 void	free_map(t_data *data, int line)
@@ -50,5 +38,6 @@ int		exit_game(t_data *data)
 		free(data->depth_buffer);
 	if (data->win.load == true)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	exit(0);
+	system("leaks Cub3D");
+	exit (0);
 }
