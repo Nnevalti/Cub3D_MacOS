@@ -65,9 +65,9 @@ void		get_color(t_data *data, t_color *color, char *rgb)
 		i++;
 	if (rgb[i] == ',')
 		i++;
+	color->b = ft_atoi(&(rgb[i]));
 	while (ft_isdigit(rgb[i]))
 		i++;
-	color->b = ft_atoi(&(rgb[i]));
 	if (color->b < 0 || color->b > 255 || color->r < 0 || color->r > 255
 		|| color->g < 0 || color->g > 255 || rgb[i] != '\0')
 		error_msg(data, "RGB values are wrong", true);

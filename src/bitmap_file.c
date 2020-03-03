@@ -65,13 +65,7 @@ void	bmp_create(t_data *data, char *filename)
 		while (j < data->win.width)
 		{
 			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
-			+ data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
-			+ 1 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
-			+ 2 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
-			+ 3 + data->display.s_line * i]), 1);
+			+ data->display.s_line * i]), 4);
 			j++;
 		}
 		i--;

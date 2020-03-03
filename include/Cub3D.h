@@ -24,13 +24,26 @@ typedef enum	e_bool
 				true
 }				t_bool;
 
-typedef enum	e_side
+typedef struct	s_coord
 {
-				N,
-				S,
-				E,
-				W
-}				t_side;
+	double		x;
+	double		y;
+}				t_coord;
+
+typedef struct	s_error
+{
+	t_bool		file;
+	t_bool		mlx;
+	t_bool		win;
+	t_bool		tex;
+	t_bool		loadtex;
+	t_bool		rgb;
+	t_bool		loadrgb;
+	t_bool		map;
+	t_bool		player;
+	t_bool		loadplayer;
+
+}				t_error;
 
 typedef struct	s_win
 {
@@ -39,21 +52,13 @@ typedef struct	s_win
 	t_bool		load;
 }				t_win;
 
-typedef struct	s_coord
+typedef enum	e_side
 {
-	double		x;
-	double		y;
-}				t_coord;
-
-typedef struct	s_key
-{
-	t_bool		up;
-	t_bool		down;
-	t_bool		left;
-	t_bool		right;
-	t_bool		r_left;
-	t_bool		r_right;
-}				t_key;
+				N,
+				S,
+				E,
+				W
+}				t_side;
 
 typedef struct	s_player
 {
@@ -83,14 +88,6 @@ typedef struct	s_ray
 	double		wall_x;
 }				t_ray;
 
-typedef struct	s_color
-{
-	int			r;
-	int			g;
-	int			b;
-	t_bool		load;
-}				t_color;
-
 typedef struct	s_tex
 {
 	void	*img;
@@ -103,20 +100,26 @@ typedef struct	s_tex
 	t_bool	load;
 }				t_tex;
 
-typedef struct	s_error
+typedef struct	s_sprite
 {
-	t_bool		file;
-	t_bool		mlx;
-	t_bool		win;
-	t_bool		tex;
-	t_bool		loadtex;
-	t_bool		rgb;
-	t_bool		loadrgb;
-	t_bool		map;
-	t_bool		player;
-	t_bool		loadplayer;
+	t_coord		pos;
+	double		distance;
+	int			sprite_x;
+	int			size;
+	int			start_x;
+	int			end_x;
+	int			start_y;
+	int			end_y;
+	t_tex		texture;
+}				t_sprite;
 
-}				t_error;
+typedef struct	s_color
+{
+	int			r;
+	int			g;
+	int			b;
+	t_bool		load;
+}				t_color;
 
 typedef struct	s_map
 {
@@ -126,12 +129,15 @@ typedef struct	s_map
 	t_bool		load;
 }				t_map;
 
-typedef struct	s_sprite
+typedef struct	s_key
 {
-	t_coord		pos;
-	double		distance;
-	t_tex		texture;
-}				t_sprite;
+	t_bool		up;
+	t_bool		down;
+	t_bool		left;
+	t_bool		right;
+	t_bool		r_left;
+	t_bool		r_right;
+}				t_key;
 
 typedef struct	s_data
 {
@@ -158,46 +164,49 @@ typedef struct	s_data
 	t_tex		east;
 	t_tex		sprite;
 
-	int			*depth_buffer;
-	t_sprite	*sprites;
+	double		*depth_buffer;
+	t_sprite	*spr;
 	int			nb_sprites;
 }				t_data;
 
-void			error_msg(t_data *data, char *msg, t_bool aff_line);
 void			init_load(t_data *data);
 t_data			init_data(char **av, int fd);
 void			init_win(char *line, t_data *data);
 void			init_tex(t_data *data, t_tex *tex, char *path);
+char			*find_path(char *line);
 void			init_color(t_data *data, char *line, t_color *color);
 void			init_map(t_data *data, char *line, int fd);
+void			malloc_map(t_data *data);
+void			free_map(t_data *data, int line);
 void			init_player(t_data *data, int h, int w, char dir);
 void			init_sprites(t_data *data);
-void			check_map(t_data *data, char **map);
-void			malloc_map(t_data *data);
-
-void			raycast(t_data *data);
-
-char			*find_path(char *line);
-
-int				ft_isspace(char c);
-void			check_init(t_data *data);
-
 
 void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);
 void			draw_sprites(t_data *data);
+t_color			get_sprite_rgb(t_data *data, int index, int i, int j);
 void 			draw_minimap(t_data *data, int size);
 void			draw_square(t_data *data, int x, int y, int size, int color);
+
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
 int				move_player(t_data *data);
-void			bmp_create(t_data	*data, char	*filename);
-void			free_map(t_data *data, int line);
-int				exit_game(t_data *data);
+void			r_left(t_data *data);
+void			r_right(t_data *data);
+
+void			check_init(t_data *data);
+void			check_map(t_data *data, char **map);
+void			error_msg(t_data *data, char *msg, t_bool aff_line);
 
 int				ft_isspace(char c);
 int				is_charset(char c, char *charset);
 int				ft_strlen_nospace(char *s1);
 char			*ft_strdup_nospace(char *s1);
+
+void			raycast(t_data *data);
+void			bmp_create(t_data	*data, char	*filename);
+int				exit_game(t_data *data);
+
+
 
 #endif

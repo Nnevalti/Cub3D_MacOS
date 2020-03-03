@@ -33,7 +33,7 @@ int		main(int ac, char **av)
 	raycast(&data);
 	if (av[2] && !(ft_strcmp((av[2]), "--save")))
 	{
-		BMP_create(&data, "screenshot.bmp");
+		bmp_create(&data, "screenshot.bmp");
 		exit_game(&data);
 	}
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);

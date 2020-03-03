@@ -22,11 +22,12 @@ SRC			=	main.c \
 				init_map.c \
 				init_map2.c \
 				sprites.c \
+				sprites2.c \
 				raycast.c \
 				draw.c \
 				key.c \
 				move.c \
-				move2.c \
+				rotate.c \
 				bitmap_file.c \
 				exit_game.c \
 				utils.c \

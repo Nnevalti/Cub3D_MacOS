@@ -106,7 +106,7 @@ void		init_sprites(t_data *data)
 	int		j;
 	int		index;
 
-	if (!(data->sprites = malloc(data->nb_sprites * sizeof(t_sprite))))
+	if (!(data->spr = malloc(data->nb_sprites * sizeof(t_sprite))))
 		exit_game(data);
 	index = 0;
 	i = 0;
@@ -117,9 +117,9 @@ void		init_sprites(t_data *data)
 		{
 			if (data->map.map[i][j] == 2)
 			{
-				data->sprites[index].texture = data->sprite;
-				data->sprites[index].pos.y = i;
-				data->sprites[index].pos.x = j;
+				data->spr[index].texture = data->sprite;
+				data->spr[index].pos.y = i;
+				data->spr[index].pos.x = j;
 				index++;
 			}
 			j++;

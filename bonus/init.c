@@ -22,7 +22,7 @@ void		init_win(char *line, t_data *data)
 		data->win.width, data->win.height, "Cub3D")))
 	{
 		data->win.load = true;
-		data->depth_buffer = malloc(data->win.width * sizeof(int));
+		data->depth_buffer = malloc(data->win.width * sizeof(double));
 	}
 }
 

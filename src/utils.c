@@ -12,12 +12,12 @@
 
 #include "../include/Cub3D.h"
 
-int			ft_isspace(char c)
+int		ft_isspace(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-int			is_charset(char c, char *charset)
+int		is_charset(char c, char *charset)
 {
 	int		i;
 

@@ -17,9 +17,9 @@ int		key_pressed(int key, t_data *data)
 	else if (key == 2)
 		data->key.right = true;
 	else if (key == 257)
-		data->player.move_speed = 0.12;
+		data->player.move_speed = 0.08;
 	else if (key == 8)
-		BMP_create(data, "screenshot_c.bmp");
+		bmp_create(data, "screenshot_c.bmp");
 	return (0);
 }
 
@@ -38,6 +38,6 @@ int		key_released(int key, t_data *data)
 	else if (key == 2)
 		data->key.right = false;
 	else if (key == 257)
-		data->player.move_speed = 0.08;
+		data->player.move_speed = 0.05;
 	return (0);
 }

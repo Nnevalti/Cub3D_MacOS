@@ -38,7 +38,7 @@ void	write_bmp_header(t_data *data, int fd)
 	write(fd, header, 54);
 }
 
-void	BMP_create(t_data	*data, char	*filename)
+void	bmp_create(t_data	*data, char	*filename)
 {
 	int		fd;
 	int		i;
@@ -54,14 +54,12 @@ void	BMP_create(t_data	*data, char	*filename)
 		j = 0;
 		while (j < data->win.width)
 		{
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 1 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 2 + data->display.s_line * i]), 1);
-			write(fd, &(data->display.addr[(j * data->display.bpp >> 3) + 3 + data->display.s_line * i]), 1);
+			write(fd, &(data->display.addr[(j * data->display.bpp >> 3)
+			+ data->display.s_line * i]), 4);
 			j++;
 		}
 		i--;
 	}
-	data->bmp_index++;
+	// data->bmp_index++;
 	close(fd);
 }

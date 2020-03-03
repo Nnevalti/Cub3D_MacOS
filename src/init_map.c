@@ -14,10 +14,10 @@
 
 int		ft_toomuchlines(t_data *data, int h, int w, char cell)
 {
-	if (is_charset(cell, "012"))
+	if (is_charset(cell, "0123"))
 	{
 		data->map.map[h][w] = cell - '0';
-		if (cell == '2')
+		if (cell >= '2' && cell <= '9')
 			data->nb_sprites++;
 		return (1);
 	}

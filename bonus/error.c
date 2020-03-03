@@ -2,7 +2,7 @@
 
 void		init_load(t_data *data)
 {
-	data->bmp_index = 0;
+	// data->bmp_index = 0;
 	data->win.load = false;
 	data->north.load = false;
 	data->south.load = false;

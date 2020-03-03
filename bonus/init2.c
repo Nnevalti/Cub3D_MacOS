@@ -38,7 +38,7 @@ void		init_player(t_data *data, int h, int w, char dir)
 	}
 	data->player.pos.x = w;
 	data->player.pos.y = h;
-	data->player.move_speed = 0.08;
-	data->player.rot_speed = 0.1;
+	data->player.move_speed = 0.05;
+	data->player.rot_speed = 0.08;
 	data->player.load = true;
 }

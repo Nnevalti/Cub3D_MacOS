@@ -45,8 +45,8 @@ void	init_player(t_data *data, int h, int w, char dir)
 	}
 	data->player.pos.x = w;
 	data->player.pos.y = h;
-	data->player.move_speed = 0.08;
-	data->player.rot_speed = 0.1;
+	data->player.move_speed = 0.05;
+	data->player.rot_speed = 0.08;
 	data->player.load = true;
 }
 
@@ -56,7 +56,7 @@ void	init_sprites(t_data *data)
 	int		j;
 	int		index;
 
-	if (!(data->sprites = malloc(data->nb_sprites * sizeof(t_sprite))))
+	if (!(data->spr = malloc(data->nb_sprites * sizeof(t_sprite))))
 		exit_game(data);
 	index = 0;
 	i = 0;
@@ -65,11 +65,11 @@ void	init_sprites(t_data *data)
 		j = 0;
 		while (j < data->map.width)
 		{
-			if (data->map.map[i][j] == 2)
+			if (data->map.map[i][j] >= 2 && data->map.map[i][j] <= 9)
 			{
-				data->sprites[index].texture = data->sprite;
-				data->sprites[index].pos.y = i;
-				data->sprites[index].pos.x = j;
+				data->spr[index].texture = data->sprite;
+				data->spr[index].pos.y = i;
+				data->spr[index].pos.x = j;
 				index++;
 			}
 			j++;
