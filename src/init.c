@@ -97,7 +97,8 @@ t_data		init_data(int ac, char **av)
 	if (ac < 2)
 		error_msg(&data, "Missing map file", false);
 	else if (ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub"))
-		error_msg(&data, "Incorrect map file : should have extension .cub", false);
+		error_msg(&data,
+			"Incorrect map file : should have extension .cub", false);
 	else if ((fd = open(av[1], O_RDONLY)) == -1)
 		error_msg(&data, "File does not exist", false);
 	init_load(&data);
