@@ -51,7 +51,7 @@ void	check_border(t_data *data)
 	}
 }
 
-void check_cell(t_data *data)
+void	check_cell(t_data *data)
 {
 	int		i;
 	int		j;

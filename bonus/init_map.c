@@ -12,7 +12,7 @@
 
 #include "../include/Cub3D.h"
 
-int		ft_toomuchlines(t_data *data, int h, int w, char cell)
+int		parse_cell(t_data *data, int h, int w, char cell)
 {
 	if (is_charset(cell, "012"))
 	{
@@ -54,12 +54,13 @@ void	fill_map(t_data *data, char *map)
 		w = 0;
 		while (w < data->map.width)
 		{
-			i += ft_toomuchlines(data, h, w, map[i]);
+			i += parse_cell(data, h, w, map[i]);
 			w++;
 		}
 		if (map[i] != '\0')
 			i++;
 		h++;
+		data->file_line++;
 	}
 }
 
@@ -96,24 +97,11 @@ void	init_map(t_data *data, char *line, int fd)
 
 	data->map.height = 1;
 	data->map.width = 0;
-	check_init(data);
 	map = create_map(data, fd, line);
 	malloc_map(data);
 	fill_map(data, map);
-	for (int i = 0; i < data->map.height; i++)
-	{
-		for (int j = 0; j < data->map.width; j++)
-		{
-			if (data->map.map[i][j] == -1)
-				printf(" ");
-			else
-				printf("%d", data->map.map[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-	init_sprites(data);
-	// check_map(data, ft_split(map, '\n'));
-	data->map.load = true;
 	free(map);
+	init_sprites(data);
+	check_map(data);
+	data->map.load = true;
 }

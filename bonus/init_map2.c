@@ -24,51 +24,67 @@ void	malloc_map(t_data *data)
 			exit_game(data);
 }
 
-int		row_check(t_data *data, char *str)
+void	check_border(t_data *data)
 {
-	int		i;
+	int i;
+	int j;
 
+	i = data->map.height - 1;
+	j = 0;
+	while (j < data->map.width)
+	{
+		if (data->map.map[0][j] == 0)
+			error_msg(data, "Map is invalid", false);
+		else if (data->map.map[i][j] == 0)
+			error_msg(data, "Map is invalid", false);
+		j++;
+	}
 	i = 0;
-	while (str[i])
-		if (str[i++] != '1')
-			return (true);
-	return (false);
+	j = data->map.width - 1;
+	while (i < data->map.height)
+	{
+		if (data->map.map[i][0] == 0)
+			error_msg(data, "Map is invalid", false);
+		else if (data->map.map[i][j] == 0)
+			error_msg(data, "Map is invalid", false);
+		i++;
+	}
 }
 
-int		column_check(t_data *data, char **map, int i, int j)
-{
-	int		min;
-
-	min = ft_strlen(map[i - 1]) < ft_strlen(map[i + 1])
-		? ft_strlen(map[i - 1]) : ft_strlen(map[i + 1]);
-	if ((j == 0 || (j >= min && j < ft_strlen(map[i]))) &&
-		map[i][j] != '1')
-		return (false);
-	return (true);
-}
-
-void	check_map(t_data *data, char **map)
+void	check_cell(t_data *data)
 {
 	int		i;
 	int		j;
 
-	if (row_check(data, map[0])
-		|| row_check(data, map[data->map.height - 1]))
-		error_msg(data, "Map is invalid", true);
-	i = 1;
-	while (i < data->map.height - 1)
+	i = 0;
+	while (i < data->map.height)
 	{
 		j = 0;
-		while (j < ft_strlen(map[i]))
+		while (j < data->map.width)
 		{
-			if (!(column_check(data, map, i, j)))
-				error_msg(data, "Map is invalid", true);
+			if (data->map.map[i][j] == 0)
+			{
+				if (i > 0)
+					if (data->map.map[i - 1][j] == -1)
+						error_msg(data, "Map is invalid", true);
+				if (j > 0)
+					if (data->map.map[i][j - 1] == -1)
+						error_msg(data, "Map is invalid", true);
+				if ( i < data->map.height - 1)
+					if (data->map.map[i + 1][j] == -1)
+						error_msg(data, "Map is invalid", true);
+				if (j < data->map.width - 1)
+					if (data->map.map[i][j + 1] == -1)
+						error_msg(data, "Map is invalid", true);
+			}
 			j++;
 		}
-		free(map[i]);
 		i++;
 	}
-	free(map[0]);
-	free(map[i]);
-	free(map);
+}
+
+void	check_map(t_data *data)
+{
+	check_border(data);
+	check_cell(data);
 }

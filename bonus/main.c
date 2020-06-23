@@ -22,19 +22,17 @@ int		game(t_data *data)
 int		main(int ac, char **av)
 {
 	t_data		data;
-	int			fd;
 
-	(void)ac;
-	if (!(av[1]) || ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub")
-		|| (fd = open(av[1], O_RDONLY)) == -1)
-		error_msg(&data, "Configuration file missing or doesn't exist", false);
-	init_load(&data);
-	data = init_data(av, fd);
+	data = init_data(ac, av);
 	raycast(&data);
 	if (av[2] && !(ft_strcmp((av[2]), "--save")))
 	{
 		bmp_create(&data, "screenshots/screenshot.bmp");
 		exit_game(&data);
+	}
+	else if (av[2])
+	{
+		error_msg(&data, "Second argument is invalid : should be --save or none", false);
 	}
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 	mlx_hook(data.win_ptr, 3, 0, key_released, &data);
