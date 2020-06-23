@@ -32,7 +32,8 @@ int		main(int ac, char **av)
 	}
 	else if (av[2])
 	{
-		error_msg(&data, "Second argument is invalid : should be --save or none", false);
+		error_msg(&data,
+			"Second argument is invalid : should be --save or none", false);
 	}
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 	mlx_hook(data.win_ptr, 3, 0, key_released, &data);

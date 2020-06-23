@@ -37,13 +37,13 @@ int		is_map(char *line)
 
 	i = 0;
 	if (line[0] == '\0')
-		return(0);
+		return (0);
 	while (line[i])
 	{
 		if (is_charset(line[i], "NSEW012 "))
 			i++;
 		else
-			return(0);
+			return (0);
 	}
 	return (1);
 }

@@ -64,18 +64,14 @@ void	check_cell(t_data *data)
 		{
 			if (data->map.map[i][j] == 0)
 			{
-				if (i > 0)
-					if (data->map.map[i - 1][j] == -1)
-						error_msg(data, "Map is invalid", true);
-				if (j > 0)
-					if (data->map.map[i][j - 1] == -1)
-						error_msg(data, "Map is invalid", true);
-				if ( i < data->map.height - 1)
-					if (data->map.map[i + 1][j] == -1)
-						error_msg(data, "Map is invalid", true);
-				if (j < data->map.width - 1)
-					if (data->map.map[i][j + 1] == -1)
-						error_msg(data, "Map is invalid", true);
+				if (i > 0 && data->map.map[i - 1][j] == -1)
+					error_msg(data, "Map is invalid", true);
+				if (j > 0 && data->map.map[i][j - 1] == -1)
+					error_msg(data, "Map is invalid", true);
+				if (i < data->map.height - 1 && data->map.map[i + 1][j] == -1)
+					error_msg(data, "Map is invalid", true);
+				if (j < data->map.width - 1 && data->map.map[i][j + 1] == -1)
+					error_msg(data, "Map is invalid", true);
 			}
 			j++;
 		}

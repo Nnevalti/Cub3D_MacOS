@@ -35,9 +35,9 @@ void		check_init(t_data *data)
 		error_msg(data, "Windows resolution is missing", false);
 	else if (data->north.load == false || data->south.load == false ||
 	data->east.load == false || data->west.load == false ||
-	data->sprite.load == false)
+	data->sprite.load == false || data->sky.load == false)
 		error_msg(data, "Missing texture path", false);
-	else if (data->floor.load == false || data->ceilling.load == false)
+	else if (data->floor.load == false)
 		error_msg(data, "Missing RGB value", false);
 	else if (data->map.load == true && data->player.load == false)
 		error_msg(data, "Player position is missing or invalid", false);

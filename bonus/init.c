@@ -21,7 +21,7 @@ void		init_load(t_data *data)
 	data->west.load = false;
 	data->sprite.load = false;
 	data->floor.load = false;
-	data->ceilling.load = true;
+	data->sky.load = false;
 	data->player.load = false;
 	data->map.load = false;
 }
@@ -79,7 +79,6 @@ int			line_parse(t_data *data, char *line, int fd)
 		init_color(data, &line[1], &data->floor);
 	if (line[0] == 'C')
 		init_tex(data, &data->sky, "./textures/sky_1.xpm");
-		// init_color(data, &line[1], &data->ceilling);
 	if (is_map(line))
 	{
 		check_init(data);
@@ -98,7 +97,8 @@ t_data		init_data(int ac, char **av)
 	if (ac < 2)
 		error_msg(&data, "Missing map file", false);
 	else if (ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub"))
-		error_msg(&data, "Incorrect map file : should have extension .cub", false);
+		error_msg(&data,
+			"Incorrect map file : should have extension .cub", false);
 	else if ((fd = open(av[1], O_RDONLY)) == -1)
 		error_msg(&data, "File does not exist", false);
 	init_load(&data);
