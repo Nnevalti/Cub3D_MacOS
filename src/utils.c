@@ -31,6 +31,23 @@ int		is_charset(char c, char *charset)
 	return (0);
 }
 
+int		is_map(char *line)
+{
+	int		i;
+
+	i = 0;
+	if (line[0] == '\0')
+		return(0);
+	while (line[i])
+	{
+		if (is_charset(line[i], "NSEW012 "))
+			i++;
+		else
+			return(0);
+	}
+	return (1);
+}
+
 int		ft_strlen_nospace(char *s1)
 {
 	int		i;

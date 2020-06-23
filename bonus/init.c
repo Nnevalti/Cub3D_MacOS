@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 17:50:04 by vdescham          #+#    #+#             */
+/*   Updated: 2020/03/02 17:50:06 by vdescham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/Cub3D.h"
 
 void		init_win(char *line, t_data *data)
@@ -52,8 +64,8 @@ int			line_parse(t_data *data, char *line, int fd)
 	if (line[0] == 'F')
 		init_color(data, &line[1], &data->floor);
 	if (line[0] == 'C')
-		init_color(data, &line[1], &data->ceilling);
-	if (line[0] == '1')
+		init_tex(data, &data->sky, "./textures/sky_1.xpm");
+	if (is_map(line))
 	{
 		init_map(data, line, fd);
 		return (0);

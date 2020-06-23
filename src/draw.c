@@ -65,19 +65,6 @@ void	get_tex(t_data *data, int y, int x)
 		draw_wall(data, &data->west, y, x);
 }
 
-void	draw_sky(t_tex *display, t_tex *tex, int y, int x)
-{
-	display->addr[(x * display->bpp >> 3) + y * display->s_line] =
-	tex->addr[(x % tex->width) * (display->bpp >> 3)
-		+ (y % tex->height) * tex->s_line];
-	display->addr[(x * display->bpp >> 3) + 1 + y * display->s_line] =
-	tex->addr[(x % tex->width) * (display->bpp >> 3)
-		+ (y % tex->height) * tex->s_line];
-	display->addr[(x * display->bpp >> 3) + 2 + y * display->s_line] =
-	tex->addr[(x % tex->width) * (display->bpp >> 3)
-		+ (y % tex->height) * tex->s_line];
-}
-
 void	draw_tex(int x, t_data *data)
 {
 	int		y;

@@ -12,6 +12,20 @@
 
 #include "../include/Cub3D.h"
 
+void		init_load(t_data *data)
+{
+	data->win.load = false;
+	data->north.load = false;
+	data->south.load = false;
+	data->east.load = false;
+	data->west.load = false;
+	data->sprite.load = false;
+	data->floor.load = false;
+	data->ceilling.load = false;
+	data->player.load = false;
+	data->map.load = false;
+}
+
 void		init_win(char *line, t_data *data)
 {
 	int		i;
@@ -65,21 +79,30 @@ int			line_parse(t_data *data, char *line, int fd)
 		init_color(data, &line[1], &data->floor);
 	if (line[0] == 'C')
 		init_color(data, &line[1], &data->ceilling);
-	if (line[0] == '1')
+	if (is_map(line))
 	{
+		check_init(data);
 		init_map(data, line, fd);
 		return (0);
 	}
 	return (1);
 }
 
-t_data		init_data(char **av, int fd)
+t_data		init_data(int ac, char **av)
 {
 	t_data		data;
 	char		*line;
+	int			fd;
 
-	data.file_line = 0;
+	if (ac < 2)
+		error_msg(&data, "Missing map file", false);
+	else if (ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub"))
+		error_msg(&data, "Incorrect map file : should have extension .cub", false);
+	else if ((fd = open(av[1], O_RDONLY)) == -1)
+		error_msg(&data, "File does not exist", false);
+	init_load(&data);
 	data.mlx_ptr = mlx_init();
+	data.file_line = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
 		data.file_line++;

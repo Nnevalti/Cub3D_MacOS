@@ -52,30 +52,16 @@ void	sort_sprites(t_data *data)
 
 void	draw_line_sprite(t_data *data, int index, int i)
 {
-	int		start_y;
-	int		end_y;
 	int		j;
 	t_color	color;
-	t_tex	tex;
 
-	start_y = data->win.height / 2 - data->spr[index].size / 2;
-	end_y = data->win.height / 2 + data->spr[index].size / 2;
-	j = (start_y < 0) ? 0 : start_y;
-	while (j < (end_y >= data->win.height ? data->win.height - 1 : end_y))
+	data->spr[index].start_y = data->win.height / 2 - data->spr[index].size / 2;
+	data->spr[index].end_y = data->win.height / 2 + data->spr[index].size / 2;
+	j = (data->spr[index].start_y < 0) ? 0 : data->spr[index].start_y;
+	while (j < (data->spr[index].end_y >= data->win.height
+		? data->win.height - 1 : data->spr[index].end_y))
 	{
-		tex = data->spr[index].texture;
-		color.r = tex.addr[(int)((i - data->spr[index].start_x) * 1.0 /
-		(data->spr[index].end_x - data->spr[index].start_x) * tex.width)
-		* (tex.bpp >> 3) + (int)((j - start_y * 1.0) / data->spr[index].size
-		* tex.height) * tex.s_line + (tex.endian ? 0 : 2)];
-		color.g = tex.addr[(int)((i - data->spr[index].start_x) * 1.0 /
-		(data->spr[index].end_x - data->spr[index].start_x) * tex.width) *
-		(tex.bpp >> 3) + (int)((j - start_y * 1.0) / data->spr[index].size *
-		tex.height) * tex.s_line + 1];
-		color.b = tex.addr[(int)((i - data->spr[index].start_x) * 1.0 /
-		(data->spr[index].end_x - data->spr[index].start_x) * tex.width) *
-		(tex.bpp >> 3) + (int)((j - start_y * 1.0) / data->spr[index].size *
-		tex.height) * tex.s_line + (tex.endian ? 2 : 0)];
+		color = get_sprite_rgb(data, index, i, j);
 		if (color.r != 0 || color.g != 0 || color.b != 0)
 			draw_rgb(data, &color, j, i);
 		j++;
@@ -92,7 +78,7 @@ void	draw_sprite(t_data *data, int index, t_coord transform)
 	+ data->spr[index].size / 2;
 	i = (data->spr[index].start_x < 0) ? 0 : data->spr[index].start_x;
 	while (i <= (data->spr[index].end_x >= data->win.width ?
-		data->win.width - 1 : data->spr[index].end_x))
+	data->win.width - 1 : data->spr[index].end_x))
 	{
 		if (transform.y > 0 && i > 0
 			&& transform.y < data->depth_buffer[i])

@@ -57,15 +57,19 @@ BNS			=	main.c \
 				init2.c \
 				init_tex.c \
 				init_map.c \
+				init_map2.c \
 				sprites.c \
+				sprites2.c \
 				raycast.c \
 				draw.c \
 				key.c \
 				move.c \
-				mini_map.c \
+				rotate.c \
 				bitmap_file.c \
+				mini_map.c \
 				exit_game.c \
 				utils.c \
+
 
 # OBJETS BNS
 OBJS_NAME_B	=	$(BNS:.c=.o)

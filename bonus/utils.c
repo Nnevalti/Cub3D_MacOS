@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdescham <vdescham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 17:50:42 by vdescham          #+#    #+#             */
+/*   Updated: 2020/03/02 17:50:43 by vdescham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/Cub3D.h"
 
-int			ft_isspace(char c)
+int		ft_isspace(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-int			is_charset(char c, char *charset)
+int		is_charset(char c, char *charset)
 {
 	int		i;
 
@@ -17,6 +29,23 @@ int			is_charset(char c, char *charset)
 		i++;
 	}
 	return (0);
+}
+
+int		is_map(char *line)
+{
+	int		i;
+
+	i = 0;
+	if (line[0] == '\0')
+		return(0);
+	while (line[i])
+	{
+		if (is_charset(line[i], "NSEW012 "))
+			i++;
+		else
+			return(0);
+	}
+	return (1);
 }
 
 int		ft_strlen_nospace(char *s1)

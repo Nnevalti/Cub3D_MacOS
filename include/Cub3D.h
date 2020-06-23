@@ -158,6 +158,7 @@ typedef struct	s_data
 	t_tex		display;
 	t_color		floor;
 	t_color		ceilling;
+	t_tex		sky;
 	t_tex		north;
 	t_tex		south;
 	t_tex		west;
@@ -170,7 +171,7 @@ typedef struct	s_data
 }				t_data;
 
 void			init_load(t_data *data);
-t_data			init_data(char **av, int fd);
+t_data			init_data(int ac, char **av);
 void			init_win(char *line, t_data *data);
 void			init_tex(t_data *data, t_tex *tex, char *path);
 char			*find_path(char *line);
@@ -195,11 +196,12 @@ void			r_left(t_data *data);
 void			r_right(t_data *data);
 
 void			check_init(t_data *data);
-void			check_map(t_data *data, char **map);
-void			error_msg(t_data *data, char *msg, t_bool aff_line);
+void			check_map(t_data *data);
+void			error_msg(t_data *data, char *msg, t_bool dis_line);
 
 int				ft_isspace(char c);
 int				is_charset(char c, char *charset);
+int				is_map(char *line);
 int				ft_strlen_nospace(char *s1);
 char			*ft_strdup_nospace(char *s1);
 
