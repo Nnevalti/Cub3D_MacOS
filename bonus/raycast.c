@@ -116,6 +116,7 @@ void	raycast(t_data *data)
 	draw_walls(data);
 	draw_sprites(data);
 	draw_minimap(data);
+	draw_lifebar(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->display.img, 0, 0);
 }

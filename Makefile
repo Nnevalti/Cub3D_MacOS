@@ -67,6 +67,7 @@ BNS			=	main.c \
 				rotate.c \
 				bitmap_file.c \
 				mini_map.c \
+				lifebar.c \
 				exit_game.c \
 				utils.c \
 

@@ -14,8 +14,11 @@
 
 int		game(t_data *data)
 {
-	if (move_player(data))
+	if (move_player(data) && data->player.life > 0)
 		raycast(data);
+	else
+		mlx_string_put (data->mlx_ptr, data->win_ptr, data->win.width / 2,
+			data->win.height / 2, 0x000000, "GAME OVER");
 	return (0);
 }
 

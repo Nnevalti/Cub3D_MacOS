@@ -72,6 +72,8 @@ typedef struct	s_player
 	double		move_speed;
 	double		rot_speed;
 	t_bool		load;
+	int			life;
+	int			damage;
 }				t_player;
 
 typedef struct	s_ray
@@ -191,6 +193,7 @@ void			draw_rgb(t_data *data, t_color *color, int y, int x);
 void			draw_sprites(t_data *data);
 t_color			get_sprite_rgb(t_data *data, int index, int i, int j);
 void 			draw_minimap(t_data *data);
+void			draw_lifebar(t_data *data);
 
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);

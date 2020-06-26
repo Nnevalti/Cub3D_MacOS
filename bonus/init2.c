@@ -48,6 +48,8 @@ void	init_player(t_data *data, int h, int w, char dir)
 	data->player.move_speed = 0.05;
 	data->player.rot_speed = 0.08;
 	data->player.load = true;
+	data->player.life = data->win.width / 2;
+	data->player.damage = (data->win.width / 2) / 100;
 }
 
 void	init_sprites(t_data *data)
