@@ -18,6 +18,10 @@
 # include <math.h>
 # include <stdio.h>
 
+# define MINIMAP_SIZE 3
+# define MINIMAP_OFFSET 20
+
+
 typedef enum	e_bool
 {
 				false,
@@ -186,8 +190,7 @@ void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);
 void			draw_sprites(t_data *data);
 t_color			get_sprite_rgb(t_data *data, int index, int i, int j);
-void 			draw_minimap(t_data *data, int size);
-void			draw_square(t_data *data, int x, int y, int size, int color);
+void 			draw_minimap(t_data *data);
 
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
