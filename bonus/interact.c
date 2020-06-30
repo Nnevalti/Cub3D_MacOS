@@ -14,21 +14,21 @@
 
 void	interact_up(t_data *data)
 {
-	int y;
-	int x;
+	int	cell;
 
-	x = (int)(data->player.pos.x + data->player.dir.x
-			* data->player.move_speed);
-	y = (int)(data->player.pos.y + data->player.dir.y
-			* data->player.move_speed);
-	if (data->map.map[(int)(data->player.pos.y)][x] == 7
-		|| data->map.map[y][(int)(data->player.pos.x)] == 7)
+	cellX = data->map.map[(int)(data->player.pos.y)]
+		[(int)(data->player.pos.x + data->player.dir.x
+			* data->player.move_speed)];
+	cellY = data->map.map[(int)(data->player.pos.y
+		+ data->player.dir.y* data->player.move_speed)]
+		[(int)(data->player.pos.x)];
+	if (cellX >= 7 || cellX <= 9 || cellY >= 7 || cellY <= 9)
 	{
-		data->player.life -= data->player.damage;
+		damage = cellX ? cellX : cellY;
+		data->player.life -= data->player.damage * damage;
 		system("afplay ./Musics/oof.mp3 &");
 	}
-	if (data->map.map[(int)(data->player.pos.y)][x] == 8
-		|| data->map.map[y][(int)(data->player.pos.x)] == 8)
+	if (cellX == 8 || cellY == 8)
 	{
 		data->player.life -= data->player.damage * 5;
 		system("afplay ./Musics/oof.mp3 &");

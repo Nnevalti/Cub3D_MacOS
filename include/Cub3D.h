@@ -74,7 +74,14 @@ typedef struct	s_player
 	t_bool		load;
 	int			life;
 	int			damage;
+	int			lifebar_size;
 }				t_player;
+
+typedef struct s_ennemy
+{
+	int		life;
+	int		damage;
+}				t_ennemy;
 
 typedef struct	s_ray
 {

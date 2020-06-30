@@ -21,7 +21,7 @@ void	draw_lifebar(t_data *data)
 	int		color;
 
 	i = 0;
-	x = data->win.width / 4;
+	x = data->player.lifebar_size;
 	y = data->win.height - 50;
 	while (i < 20)
 	{

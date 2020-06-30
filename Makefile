@@ -37,8 +37,10 @@ OBJS_NAME	=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(SRC_DIR)/, $(OBJS_NAME))
 
 # MINILIBX
-MLX_DIR		=	/usr/local/include
-MLX_LNK_DIR	=	/usr/local/lib/
+#ßMLX_DIR		=	/usr/local/include
+MLX_DIR		=	./minilibx_opengl
+#MLX_LNK_DIR	=	/usr/local/lib/
+MLX_LNK_DIR	=	 $(MLX_DIR)
 MLX_INC		=	-I $(MLX_DIR)
 MLX_LNK		=	-L $(MLX_LNK_DIR) -lmlx -framework OpenGL -framework AppKit
 
