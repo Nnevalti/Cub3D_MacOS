@@ -55,6 +55,11 @@ void	fill_map(t_data *data, char *map)
 		while (w < data->map.width)
 		{
 			i += parse_cell(data, h, w, map[i]);
+			if (data->map.map[h][w] == 5)
+			{
+				data->portal.x = w;
+				data->portal.y = h;
+			}
 			w++;
 		}
 		if (map[i] != '\0')

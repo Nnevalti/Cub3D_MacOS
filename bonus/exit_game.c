@@ -25,6 +25,24 @@ void	free_map(t_data *data, int line)
 	free(data->map.map);
 }
 
+void	free_sprites(t_data *data)
+{
+	if (data->sprite2.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite2.img);
+	if (data->sprite3.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite3.img);
+	if (data->sprite4.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite4.img);
+	if (data->sprite5.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite5.img);
+	if (data->sprite6.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite6.img);
+	if (data->sprite7.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite7.img);
+	if (data->sprite8.load == true)
+		mlx_destroy_image(data->mlx_ptr, data->sprite8.img);
+}
+
 void	free_tex(t_data *data)
 {
 	if (data->north.load == true)
@@ -39,6 +57,7 @@ void	free_tex(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->sprite.img);
 	if (data->display.load == true)
 		mlx_destroy_image(data->mlx_ptr, data->display.img);
+	free_sprites(data);
 }
 
 int		exit_game(t_data *data)
@@ -50,5 +69,7 @@ int		exit_game(t_data *data)
 		free(data->depth_buffer);
 	if (data->win.load == true)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	system("killall afplay");
+	system("leaks Cub3D");
 	exit(0);
 }

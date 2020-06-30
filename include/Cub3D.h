@@ -170,12 +170,23 @@ typedef struct	s_data
 	t_tex		west;
 	t_tex		east;
 	t_tex		sprite;
+	t_tex		sprite2;
+	t_tex		sprite3;
+	t_tex		sprite4;
+	t_tex		sprite5;
+	t_tex		sprite6;
+	t_tex		sprite7;
+	t_tex		sprite8;
+	t_coord		portal;
+	t_bool		success;
 
 	double		*depth_buffer;
 	t_sprite	*spr;
 	int			nb_sprites;
 }				t_data;
 
+int				line_parse(t_data *data, char *line, int fd);
+void			line_parse_bis(t_data *data, char *line);
 void			init_load(t_data *data);
 t_data			init_data(int ac, char **av);
 void			init_win(char *line, t_data *data);
@@ -200,6 +211,11 @@ int				key_released(int key, t_data *data);
 int				move_player(t_data *data);
 void			r_left(t_data *data);
 void			r_right(t_data *data);
+
+void			interact_up(t_data *data);
+void			interact_down(t_data *data);
+void			interact_right(t_data *data);
+void			interact_left(t_data *data);
 
 void			check_init(t_data *data);
 void			check_map(t_data *data);

@@ -20,11 +20,7 @@ void	up(t_data *data)
 	if (data->map.map[(int)(data->player.pos.y + data->player.dir.y
 		* data->player.move_speed)][(int)(data->player.pos.x)] == false)
 		data->player.pos.y += data->player.dir.y * data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		+ data->player.dir.x * data->player.move_speed)] >= 2
-		|| data->map.map[(int)(data->player.pos.y + data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] >= 2)
-		data->player.life -= data->player.damage;
+	interact_up(data);
 }
 
 void	down(t_data *data)
@@ -35,11 +31,7 @@ void	down(t_data *data)
 	if (data->map.map[(int)(data->player.pos.y - data->player.dir.y
 		* data->player.move_speed)][(int)(data->player.pos.x)] == false)
 		data->player.pos.y -= data->player.dir.y * data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		- data->player.dir.x * data->player.move_speed)] >= 2
-		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] >= 2)
-		data->player.life -= data->player.damage;
+	interact_down(data);
 }
 
 void	right(t_data *data)
@@ -52,11 +44,7 @@ void	right(t_data *data)
 		* data->player.move_speed)][(int)data->player.pos.x] == false)
 		data->player.pos.y += data->player.plane.y
 		* data->player.move_speed;
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		+ data->player.plane.x * data->player.move_speed)] >= 2
-		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] >= 2)
-		data->player.life -= data->player.damage;
+	interact_right(data);
 }
 
 void	left(t_data *data)
@@ -69,11 +57,7 @@ void	left(t_data *data)
 		* data->player.move_speed)][(int)data->player.pos.x] == false)
 		data->player.pos.y -= data->player.plane.y
 		* data->player.move_speed;
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		- data->player.plane.x * data->player.move_speed)] >= 2
-		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] >= 2)
-			data->player.life -= data->player.damage;
+	interact_left(data);
 }
 
 int		move_player(t_data *data)

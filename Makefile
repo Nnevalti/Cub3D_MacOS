@@ -53,6 +53,7 @@ LIBFT		=	$(addprefix $(FT_DIR), libft.a)
 BNS_DIR		=	./bonus
 BNS			=	main.c \
 				error.c \
+				line_parse.c \
 				init.c \
 				init2.c \
 				init_tex.c \
@@ -68,6 +69,7 @@ BNS			=	main.c \
 				bitmap_file.c \
 				mini_map.c \
 				lifebar.c \
+				interact.c \
 				exit_game.c \
 				utils.c \
 

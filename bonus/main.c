@@ -14,11 +14,16 @@
 
 int		game(t_data *data)
 {
-	if (move_player(data) && data->player.life > 0)
+	if (move_player(data) && data->player.life >= 0 && !data->success)
 		raycast(data);
-	else
-		mlx_string_put (data->mlx_ptr, data->win_ptr, data->win.width / 2,
-			data->win.height / 2, 0x000000, "GAME OVER");
+	else if (data->player.life < 0)
+	{
+		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
+			data->win.height / 2, 0xFF0000, "GET REKT");
+	}
+	else if (data->success)
+		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
+			data->win.height / 2, 0xCCCC00, "GG EZ BROOOO");
 	return (0);
 }
 
@@ -38,6 +43,7 @@ int		main(int ac, char **av)
 		error_msg(&data,
 			"Second argument is invalid : should be --save or none", false);
 	}
+	system("afplay ./Musics/undertale-megalovania.mp3 &");
 	mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 	mlx_hook(data.win_ptr, 3, 0, key_released, &data);
 	mlx_hook(data.win_ptr, 17, 0, exit_game, &data);

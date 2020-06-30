@@ -20,10 +20,18 @@ void		init_load(t_data *data)
 	data->east.load = false;
 	data->west.load = false;
 	data->sprite.load = false;
+	data->sprite2.load = false;
+	data->sprite3.load = false;
+	data->sprite4.load = false;
+	data->sprite5.load = false;
+	data->sprite6.load = false;
+	data->sprite7.load = false;
+	data->sprite8.load = false;
 	data->floor.load = false;
 	data->sky.load = false;
 	data->player.load = false;
 	data->map.load = false;
+	data->success = false;
 }
 
 void		init_win(char *line, t_data *data)
@@ -59,33 +67,6 @@ void		init_display(t_data *data)
 		|| !(data->display.addr = mlx_get_data_addr(data->display.img,
 			&data->display.bpp, &data->display.s_line, &data->display.endian)))
 		exit_game(data);
-}
-
-int			line_parse(t_data *data, char *line, int fd)
-{
-	if (line[0] == 'R')
-		init_win(&line[1], data);
-	if (line[0] == 'N' && line[1] == 'O')
-		init_tex(data, &data->north, find_path(&line[3]));
-	if ((line[0] == 'S' && line[1] == 'O'))
-		init_tex(data, &data->south, find_path(&line[3]));
-	if ((line[0] == 'W' && line[1] == 'E'))
-		init_tex(data, &data->west, find_path(&line[3]));
-	if ((line[0] == 'E' && line[1] == 'A'))
-		init_tex(data, &data->east, find_path(&line[3]));
-	if (line[0] == 'S' && line[1] == ' ')
-		init_tex(data, &data->sprite, find_path(&line[2]));
-	if (line[0] == 'F')
-		init_color(data, &line[1], &data->floor);
-	if (line[0] == 'C')
-		init_tex(data, &data->sky, "./textures/sky_1.xpm");
-	if (is_map(line))
-	{
-		check_init(data);
-		init_map(data, line, fd);
-		return (0);
-	}
-	return (1);
 }
 
 t_data		init_data(int ac, char **av)

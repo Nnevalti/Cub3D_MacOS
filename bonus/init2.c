@@ -52,6 +52,27 @@ void	init_player(t_data *data, int h, int w, char dir)
 	data->player.damage = (data->win.width / 2) / 100;
 }
 
+t_tex	set_tex(t_data *data, int cell)
+{
+	if (data->sprite2.load && cell == 3)
+		return (data->sprite2);
+	else if (data->sprite3.load && cell == 4)
+		return (data->sprite3);
+	else if (data->sprite4.load && cell == 5)
+		return (data->sprite4);
+	else if (data->sprite5.load && cell == 6)
+		return (data->sprite5);
+	else if (data->sprite6.load && cell == 7)
+		return (data->sprite6);
+	else if (data->sprite7.load && cell == 8)
+		return (data->sprite7);
+	else if (data->sprite8.load && cell == 9)
+		return (data->sprite8);
+	else
+		return (data->sprite);
+	exit_game(data);
+}
+
 void	init_sprites(t_data *data)
 {
 	int		i;
@@ -69,7 +90,7 @@ void	init_sprites(t_data *data)
 		{
 			if (data->map.map[i][j] >= 2 && data->map.map[i][j] <= 9)
 			{
-				data->spr[index].texture = data->sprite;
+				data->spr[index].texture = set_tex(data, data->map.map[i][j]);
 				data->spr[index].pos.y = i;
 				data->spr[index].pos.x = j;
 				index++;
