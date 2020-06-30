@@ -179,6 +179,7 @@ typedef struct	s_data
 	t_tex		sprite8;
 	t_coord		portal;
 	t_bool		success;
+	t_bool		gameover;
 
 	double		*depth_buffer;
 	t_sprite	*spr;

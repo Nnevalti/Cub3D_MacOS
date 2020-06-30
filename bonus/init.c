@@ -32,6 +32,7 @@ void		init_load(t_data *data)
 	data->player.load = false;
 	data->map.load = false;
 	data->success = false;
+	data->gameover = false;
 }
 
 void		init_win(char *line, t_data *data)

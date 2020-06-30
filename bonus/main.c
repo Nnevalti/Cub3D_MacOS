@@ -20,6 +20,11 @@ int		game(t_data *data)
 	{
 		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
 			data->win.height / 2, 0xFF0000, "GET REKT");
+		if (data->gameover == false)
+		{
+			system("afplay ./Musics/oof.mp3 -r 0.1 &");
+			data->gameover = true;
+		}
 	}
 	else if (data->success)
 		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
