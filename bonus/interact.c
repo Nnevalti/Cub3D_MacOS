@@ -23,13 +23,22 @@ void	interact_up(t_data *data)
 			* data->player.move_speed);
 	if (data->map.map[(int)(data->player.pos.y)][x] == 7
 		|| data->map.map[y][(int)(data->player.pos.x)] == 7)
+	{
 		data->player.life -= data->player.damage;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)(data->player.pos.y)][x] == 8
 		|| data->map.map[y][(int)(data->player.pos.x)] == 8)
+	{
 		data->player.life -= data->player.damage * 5;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)(data->player.pos.y)][x] == 9
 		|| data->map.map[y][(int)(data->player.pos.x)] == 9)
+	{
 		data->player.life -= data->player.damage * 10;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)(data->player.pos.y)][x] == 4
 		|| data->map.map[y][(int)(data->player.pos.x)] == 4)
 	{
@@ -47,17 +56,26 @@ void	interact_down(t_data *data)
 		- data->player.dir.x * data->player.move_speed)] == 7
 		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
 		* data->player.move_speed)][(int)(data->player.pos.x)] == 7)
+	{
 		data->player.life -= data->player.damage;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
 		- data->player.dir.x * data->player.move_speed)] == 8
 		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
 		* data->player.move_speed)][(int)(data->player.pos.x)] == 8)
+	{
 		data->player.life -= data->player.damage * 5;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
 		- data->player.dir.x * data->player.move_speed)] == 9
 		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
 		* data->player.move_speed)][(int)(data->player.pos.x)] == 9)
+	{
 		data->player.life -= data->player.damage * 10;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 }
 
 void	interact_right(t_data *data)
@@ -66,17 +84,26 @@ void	interact_right(t_data *data)
 		+ data->player.plane.x * data->player.move_speed)] == 7
 		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 7)
+	{
 		data->player.life -= data->player.damage;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
 		+ data->player.plane.x * data->player.move_speed)] == 8
 		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 8)
+	{
 		data->player.life -= data->player.damage * 5;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
 		+ data->player.plane.x * data->player.move_speed)] == 9
 		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 9)
+	{
 		data->player.life -= data->player.damage * 10;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 }
 
 void	interact_left(t_data *data)
@@ -85,15 +112,24 @@ void	interact_left(t_data *data)
 		- data->player.plane.x * data->player.move_speed)] == 7
 		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 7)
+	{
 		data->player.life -= data->player.damage;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
 		- data->player.plane.x * data->player.move_speed)] == 8
 		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 8)
+	{
 		data->player.life -= data->player.damage * 5;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
 		- data->player.plane.x * data->player.move_speed)] == 9
 		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
 		* data->player.move_speed)][(int)data->player.pos.x] == 9)
+	{
 		data->player.life -= data->player.damage * 10;
+		system("afplay ./Musics/oof.mp3 &");
+	}
 }
