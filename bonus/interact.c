@@ -28,25 +28,12 @@ void	interact_up(t_data *data)
 		data->player.life -= data->player.damage * damage;
 		system("afplay ./Musics/oof.mp3 &");
 	}
-	if (cellX == 8 || cellY == 8)
-	{
-		data->player.life -= data->player.damage * 5;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)(data->player.pos.y)][x] == 9
-		|| data->map.map[y][(int)(data->player.pos.x)] == 9)
-	{
-		data->player.life -= data->player.damage * 10;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)(data->player.pos.y)][x] == 4
-		|| data->map.map[y][(int)(data->player.pos.x)] == 4)
+	if (cellX == 4 || cellY == 4)
 	{
 		data->player.pos.x = data->portal.x;
 		data->player.pos.y = data->portal.y;
 	}
-	if (data->map.map[(int)(data->player.pos.y)][x] == 6
-		|| data->map.map[y][(int)(data->player.pos.x)] == 6)
+	if (cellX == 6 || cellY == 6)
 		data->success = true;
 }
 
