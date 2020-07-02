@@ -12,111 +12,58 @@
 
 #include "../include/Cub3D.h"
 
-void	interact_up(t_data *data)
+int		get_damage(t_data *data, int ennemy)
 {
-	int	cell;
+	if (ennemy == 7)
+		return (1);
+	if (ennemy == 8)
+		return (5);
+	if (ennemy == 9)
+		return (10);
+	return (0);
+}
 
-	cellX = data->map.map[(int)(data->player.pos.y)]
-		[(int)(data->player.pos.x + data->player.dir.x
-			* data->player.move_speed)];
-	cellY = data->map.map[(int)(data->player.pos.y
-		+ data->player.dir.y* data->player.move_speed)]
-		[(int)(data->player.pos.x)];
-	if (cellX >= 7 || cellX <= 9 || cellY >= 7 || cellY <= 9)
+void	key_interact(t_data *data, int cell_x, int cell_y)
+{
+	int	j;
+
+	j = 0;
+	if (cell_x == 3 || cell_y == 3)
 	{
-		damage = cellX ? cellX : cellY;
-		data->player.life -= data->player.damage * damage;
+		system("afplay Musics/coin.mp3 &");
+		j = 0;
+		while (j < data->nb_sprites)
+		{
+			if ((int)data->player.pos.x == (int)data->spr[j].pos.x
+			&& (int)data->player.pos.y == (int)data->spr[j].pos.y)
+			{
+				data->spr[j].is_alive = false;
+				data->map.map[(int)data->spr[j].pos.y]
+				[(int)data->spr[j].pos.x] = 0;
+				data->player.has_key = true;
+			}
+			j++;
+		}
+	}
+}
+
+void	interact(t_data *data, int cell_x, int cell_y)
+{
+	int	ennemy;
+
+	if ((cell_x >= 7 && cell_x <= 9) || (cell_y >= 7 && cell_y <= 9))
+	{
+		ennemy = cell_x > cell_y ? cell_x : cell_y;
+		data->player.life -= get_damage(data, ennemy);
 		system("afplay ./Musics/oof.mp3 &");
 	}
-	if (cellX == 4 || cellY == 4)
+	if ((cell_x == 4 || cell_y == 4) && data->player.has_key)
 	{
 		data->player.pos.x = data->portal.x;
 		data->player.pos.y = data->portal.y;
+		system("afplay Musics/tp.mp3 &");
 	}
-	if (cellX == 6 || cellY == 6)
+	if (cell_x == 6 || cell_y == 6)
 		data->success = true;
-}
-
-void	interact_down(t_data *data)
-{
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		- data->player.dir.x * data->player.move_speed)] == 7
-		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] == 7)
-	{
-		data->player.life -= data->player.damage;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		- data->player.dir.x * data->player.move_speed)] == 8
-		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] == 8)
-	{
-		data->player.life -= data->player.damage * 5;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		- data->player.dir.x * data->player.move_speed)] == 9
-		|| data->map.map[(int)(data->player.pos.y - data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] == 9)
-	{
-		data->player.life -= data->player.damage * 10;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-}
-
-void	interact_right(t_data *data)
-{
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		+ data->player.plane.x * data->player.move_speed)] == 7
-		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 7)
-	{
-		data->player.life -= data->player.damage;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		+ data->player.plane.x * data->player.move_speed)] == 8
-		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 8)
-	{
-		data->player.life -= data->player.damage * 5;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		+ data->player.plane.x * data->player.move_speed)] == 9
-		|| data->map.map[(int)(data->player.pos.y + data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 9)
-	{
-		data->player.life -= data->player.damage * 10;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-}
-
-void	interact_left(t_data *data)
-{
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		- data->player.plane.x * data->player.move_speed)] == 7
-		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 7)
-	{
-		data->player.life -= data->player.damage;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		- data->player.plane.x * data->player.move_speed)] == 8
-		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 8)
-	{
-		data->player.life -= data->player.damage * 5;
-		system("afplay ./Musics/oof.mp3 &");
-	}
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		- data->player.plane.x * data->player.move_speed)] == 9
-		|| data->map.map[(int)(data->player.pos.y - data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == 9)
-	{
-		data->player.life -= data->player.damage * 10;
-		system("afplay ./Musics/oof.mp3 &");
-	}
+	key_interact(data, cell_x, cell_y);
 }

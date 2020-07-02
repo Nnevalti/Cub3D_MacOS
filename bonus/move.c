@@ -14,50 +14,70 @@
 
 void	up(t_data *data)
 {
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		+ data->player.dir.x * data->player.move_speed)] == false)
+	int	cell_x;
+	int	cell_y;
+
+	cell_x = data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
+		+ data->player.dir.x * data->player.move_speed)];
+	cell_y = data->map.map[(int)(data->player.pos.y + data->player.dir.y
+		* data->player.move_speed)][(int)(data->player.pos.x)];
+	if (cell_x == false || cell_x == 3)
 		data->player.pos.x += data->player.dir.x * data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y + data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] == false)
+	if (cell_y == false || cell_y == 3)
 		data->player.pos.y += data->player.dir.y * data->player.move_speed;
-	interact_up(data);
+	interact(data, cell_x, cell_y);
 }
 
 void	down(t_data *data)
 {
-	if (data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
-		- data->player.dir.x * data->player.move_speed)] == false)
+	int	cell_x;
+	int	cell_y;
+
+	cell_x = data->map.map[(int)(data->player.pos.y)][(int)(data->player.pos.x
+		- data->player.dir.x * data->player.move_speed)];
+	cell_y = data->map.map[(int)(data->player.pos.y - data->player.dir.y
+		* data->player.move_speed)][(int)(data->player.pos.x)];
+	if (cell_x == false || cell_x == 3)
 		data->player.pos.x -= data->player.dir.x * data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y - data->player.dir.y
-		* data->player.move_speed)][(int)(data->player.pos.x)] == false)
+	if (cell_y == false || cell_y == 3)
 		data->player.pos.y -= data->player.dir.y * data->player.move_speed;
-	interact_down(data);
+	interact(data, cell_x, cell_y);
 }
 
 void	right(t_data *data)
 {
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		+ data->player.plane.x * data->player.move_speed)] == false)
+	int	cell_x;
+	int	cell_y;
+
+	cell_x = data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
+		+ data->player.plane.x * data->player.move_speed)];
+	cell_y = data->map.map[(int)(data->player.pos.y + data->player.plane.y
+		* data->player.move_speed)][(int)data->player.pos.x];
+	if (cell_x == false || cell_x == 3)
 		data->player.pos.x += data->player.plane.x
 		* data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y + data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == false)
+	if (cell_y == false || cell_y == 3)
 		data->player.pos.y += data->player.plane.y
 		* data->player.move_speed;
-	interact_right(data);
+	interact(data, cell_x, cell_y);
 }
 
 void	left(t_data *data)
 {
-	if (data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
-		- data->player.plane.x * data->player.move_speed)] == false)
+	int	cell_x;
+	int	cell_y;
+
+	cell_x = data->map.map[(int)data->player.pos.y][(int)(data->player.pos.x
+		- data->player.plane.x * data->player.move_speed)];
+	cell_y = data->map.map[(int)(data->player.pos.y - data->player.plane.y
+		* data->player.move_speed)][(int)data->player.pos.x];
+	if (cell_x == false || cell_x == 3)
 		data->player.pos.x -= data->player.plane.x
 		* data->player.move_speed;
-	if (data->map.map[(int)(data->player.pos.y - data->player.plane.y
-		* data->player.move_speed)][(int)data->player.pos.x] == false)
+	if (cell_y == false || cell_y == 3)
 		data->player.pos.y -= data->player.plane.y
 		* data->player.move_speed;
-	interact_left(data);
+	interact(data, cell_x, cell_y);
 }
 
 int		move_player(t_data *data)
@@ -76,7 +96,8 @@ int		move_player(t_data *data)
 		r_left(data);
 	if (data->key.up == false && data->key.down == false
 		&& data->key.left == false && data->key.right == false
-		&& data->key.r_left == false && data->key.r_right == false)
+		&& data->key.r_left == false && data->key.r_right == false
+		&& data->key.shoot == false)
 		return (0);
 	return (1);
 }

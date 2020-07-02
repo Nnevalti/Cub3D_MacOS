@@ -16,6 +16,7 @@
 # include "../src/libft/libft.h"
 # include "mlx.h"
 # include <math.h>
+# include <time.h>
 # include <stdio.h>
 
 # define MINIMAP_SIZE 3
@@ -73,8 +74,9 @@ typedef struct	s_player
 	double		rot_speed;
 	t_bool		load;
 	int			life;
-	int			damage;
 	int			lifebar_size;
+	t_bool		has_key;
+	t_bool		is_shooting;
 }				t_player;
 
 typedef struct s_ennemy
@@ -124,6 +126,7 @@ typedef struct	s_sprite
 	int			start_y;
 	int			end_y;
 	t_tex		texture;
+	t_bool		is_alive;
 }				t_sprite;
 
 typedef struct	s_color
@@ -150,6 +153,7 @@ typedef struct	s_key
 	t_bool		right;
 	t_bool		r_left;
 	t_bool		r_right;
+	t_bool		shoot;
 }				t_key;
 
 typedef struct	s_data
@@ -167,6 +171,7 @@ typedef struct	s_data
 
 	t_coord		cam;
 	t_ray		ray;
+	t_ray		gun;
 
 	t_tex		display;
 	t_color		floor;
@@ -187,10 +192,15 @@ typedef struct	s_data
 	t_coord		portal;
 	t_bool		success;
 	t_bool		gameover;
+	int			timer;
+	char		*sec;
 
 	double		*depth_buffer;
 	t_sprite	*spr;
 	int			nb_sprites;
+
+	time_t		t1;
+	time_t		t2;
 }				t_data;
 
 int				line_parse(t_data *data, char *line, int fd);
@@ -213,6 +223,11 @@ void			draw_sprites(t_data *data);
 t_color			get_sprite_rgb(t_data *data, int index, int i, int j);
 void 			draw_minimap(t_data *data);
 void			draw_lifebar(t_data *data);
+void			interact(t_data *data, int cell_x, int cell_y);
+void			draw_timer(t_data *data, t_bool raycast);
+void 			draw_cursor(t_data *data);
+
+void			shoot(t_data *data);
 
 int				key_pressed(int key, t_data *data);
 int				key_released(int key, t_data *data);
@@ -220,15 +235,11 @@ int				move_player(t_data *data);
 void			r_left(t_data *data);
 void			r_right(t_data *data);
 
-void			interact_up(t_data *data);
-void			interact_down(t_data *data);
-void			interact_right(t_data *data);
-void			interact_left(t_data *data);
-
 void			check_init(t_data *data);
 void			check_map(t_data *data);
 void			error_msg(t_data *data, char *msg, t_bool dis_line);
 
+char			*ft_itoa(int n);
 int				ft_isspace(char c);
 int				is_charset(char c, char *charset);
 int				is_map(char *line);

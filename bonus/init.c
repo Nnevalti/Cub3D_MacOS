@@ -33,6 +33,7 @@ void		init_load(t_data *data)
 	data->map.load = false;
 	data->success = false;
 	data->gameover = false;
+	data->timer = 0;
 }
 
 void		init_win(char *line, t_data *data)

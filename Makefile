@@ -37,10 +37,10 @@ OBJS_NAME	=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(SRC_DIR)/, $(OBJS_NAME))
 
 # MINILIBX
-#ßMLX_DIR		=	/usr/local/include
-MLX_DIR		=	./minilibx_opengl
-#MLX_LNK_DIR	=	/usr/local/lib/
-MLX_LNK_DIR	=	 $(MLX_DIR)
+MLX_DIR		=	/usr/local/include
+# MLX_DIR		=	./minilibx_opengl
+MLX_LNK_DIR	=	/usr/local/lib/
+#MLX_LNK_DIR	=	 $(MLX_DIR)
 MLX_INC		=	-I $(MLX_DIR)
 MLX_LNK		=	-L $(MLX_LNK_DIR) -lmlx -framework OpenGL -framework AppKit
 
@@ -72,8 +72,12 @@ BNS			=	main.c \
 				mini_map.c \
 				lifebar.c \
 				interact.c \
+				timer.c \
+				cursor.c \
+				gun.c \
 				exit_game.c \
 				utils.c \
+				utils2.c \
 
 
 # OBJETS BNS

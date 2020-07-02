@@ -32,6 +32,12 @@ int		key_pressed(int key, t_data *data)
 		data->player.move_speed = 0.08;
 	else if (key == 8)
 		bmp_create(data, "screenshot_c.bmp");
+	else if (key == 14 && data->player.is_shooting == false)
+	{
+		data->key.shoot = true;
+		system("afplay Musics/gun.mp3 &");
+		shoot(data);
+	}
 	return (0);
 }
 
@@ -51,5 +57,7 @@ int		key_released(int key, t_data *data)
 		data->key.right = false;
 	else if (key == 257)
 		data->player.move_speed = 0.05;
+	else if (key == 14)
+		data->key.shoot = false;
 	return (0);
 }

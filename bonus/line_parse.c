@@ -49,7 +49,7 @@ int			line_parse(t_data *data, char *line, int fd)
 	if (line[0] == 'F')
 		init_color(data, &line[1], &data->floor);
 	if (line[0] == 'C')
-		init_tex(data, &data->sky, "./textures/sky_1.xpm");
+		init_tex(data, &data->sky, find_path(&line[2]));
 	if (is_map(line))
 	{
 		check_init(data);

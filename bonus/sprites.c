@@ -99,19 +99,21 @@ void	draw_sprites(t_data *data)
 	index = 0;
 	while (index < data->nb_sprites)
 	{
-		sprite_pos.x = data->spr[index].pos.x + 0.5 - data->player.pos.x;
-		sprite_pos.y = data->spr[index].pos.y + 0.5 - data->player.pos.y;
-		det = 1.0 / (data->player.plane.x * data->player.dir.y
-			- data->player.dir.x * data->player.plane.y);
-		transform.x = det * (data->player.dir.y * sprite_pos.x
-			- data->player.dir.x * sprite_pos.y);
-		transform.y = det * (-data->player.plane.y * sprite_pos.x
-			+ data->player.plane.x * sprite_pos.y);
-		data->spr[index].sprite_x = (int)((data->win.width / 2) *
-			(1 + transform.x / transform.y));
-		data->spr[index].size = abs((int)(data->win.height
-			/ transform.y));
-		draw_sprite(data, index, transform);
+		if (data->spr[index].is_alive)
+		{
+			sprite_pos.x = data->spr[index].pos.x + 0.5 - data->player.pos.x;
+			sprite_pos.y = data->spr[index].pos.y + 0.5 - data->player.pos.y;
+			det = 1.0 / (data->player.plane.x * data->player.dir.y
+				- data->player.dir.x * data->player.plane.y);
+			transform.x = det * (data->player.dir.y * sprite_pos.x
+				- data->player.dir.x * sprite_pos.y);
+			transform.y = det * (-data->player.plane.y * sprite_pos.x
+				+ data->player.plane.x * sprite_pos.y);
+			data->spr[index].sprite_x = (int)((data->win.width / 2) *
+				(1 + transform.x / transform.y));
+			data->spr[index].size = abs((int)(data->win.height / transform.y));
+			draw_sprite(data, index, transform);
+		}
 		index++;
 	}
 }

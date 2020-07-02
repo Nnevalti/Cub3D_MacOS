@@ -48,9 +48,9 @@ void	init_player(t_data *data, int h, int w, char dir)
 	data->player.move_speed = 0.05;
 	data->player.rot_speed = 0.08;
 	data->player.load = true;
-	data->player.lifefar_size = data->win.width / 2;
+	data->player.lifebar_size = data->win.width / 2;
 	data->player.life = 100;
-	data->player.damage = 5;
+	data->player.has_key = false;
 }
 
 t_tex	set_tex(t_data *data, int cell)
@@ -94,6 +94,7 @@ void	init_sprites(t_data *data)
 				data->spr[index].texture = set_tex(data, data->map.map[i][j]);
 				data->spr[index].pos.y = i;
 				data->spr[index].pos.x = j;
+				data->spr[index].is_alive = true;
 				index++;
 			}
 			j++;
