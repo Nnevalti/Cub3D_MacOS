@@ -35,7 +35,7 @@ int		key_pressed(int key, t_data *data)
 	else if (key == 14 && data->player.is_shooting == false)
 	{
 		data->key.shoot = true;
-		system("afplay Musics/gun.mp3 &");
+		system("afplay Musics/gun.mp3 & afplay Musics/reload.mp3 -v 4 &");
 		shoot(data);
 	}
 	return (0);

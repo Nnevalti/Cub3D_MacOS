@@ -12,27 +12,41 @@
 
 #include "../include/Cub3D.h"
 
+void	gg(t_data *data)
+{
+	mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
+		data->win.height / 2, 0xCCCC00, "GG EZ BROOOO");
+	if (data->omg == false)
+	{
+		data->omg = true;
+		system("afplay Musics/OMG.mp3 &");
+	}
+}
+
+void	gameover(t_data *data)
+{
+	mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
+		data->win.height / 2, 0xFF0000, "GET REKT");
+	if (data->gameover == false)
+	{
+		system("afplay Musics/oof.mp3 -r 0.1 & afplay ./Musics/nope.mp3 &");
+		system("afplay Musics/gameover.mp3 -v 3 &");
+		data->gameover = true;
+	}
+}
+
 int		game(t_data *data)
 {
-	if (move_player(data) && data->player.life >= 0
-	&& !data->success && data->timer < 60)
+	if (data->player.life < 0 || data->timer > 98)
+		gameover(data);
+	else if (data->success)
+		gg(data);
+	else if (move_player(data) && data->player.life >= 0
+	&& !data->success && data->timer < 99)
 	{
 		raycast(data);
 		draw_timer(data, true);
 	}
-	else if (data->player.life < 0 || data->timer > 59)
-	{
-		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
-			data->win.height / 2, 0xFF0000, "GET REKT");
-		if (data->gameover == false)
-		{
-			system("afplay ./Musics/oof.mp3 -r 0.1 &");
-			data->gameover = true;
-		}
-	}
-	else if (data->success)
-		mlx_string_put(data->mlx_ptr, data->win_ptr, data->win.width / 2,
-			data->win.height / 2, 0xCCCC00, "GG EZ BROOOO");
 	if (data->timer < 60)
 		draw_timer(data, false);
 	return (0);

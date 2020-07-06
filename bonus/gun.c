@@ -54,6 +54,22 @@ void	calc_gun_hit(t_data *data)
 	}
 }
 
+void	ennemy_sound(int ennemy)
+{
+	if (ennemy == 9)
+		system("afplay Musics/death.mp3 &");
+	if (ennemy == 8)
+		system("afplay Musics/wilhem.mp3 -r 2 &");
+	if (ennemy == 3 || ennemy == 4)
+		system("afplay Musics/stupid.mp3 &");
+	if (ennemy == 2)
+		system("afplay Musics/barrel.mp3 &");
+	if (ennemy == 4 || ennemy == 5)
+		system("afplay Musics/off.mp3 &");
+	if (ennemy == 6)
+		system("afplay Musics/done.mp3 -v 3 &");
+}
+
 void	gun_hit(t_data *data)
 {
 	int		i;
@@ -71,6 +87,7 @@ void	gun_hit(t_data *data)
 			{
 				data->gun.hit = true;
 				data->spr[j].is_alive = false;
+				ennemy_sound(data->map.map[data->gun.mapY][data->gun.mapX]);
 				data->map.map[data->gun.mapY][data->gun.mapX] = 0;
 				return ;
 			}

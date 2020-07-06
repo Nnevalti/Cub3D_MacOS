@@ -12,7 +12,7 @@
 
 #include "../include/Cub3D.h"
 
-int		get_damage(t_data *data, int ennemy)
+int		get_damage(int ennemy)
 {
 	if (ennemy == 7)
 		return (1);
@@ -30,7 +30,7 @@ void	key_interact(t_data *data, int cell_x, int cell_y)
 	j = 0;
 	if (cell_x == 3 || cell_y == 3)
 	{
-		system("afplay Musics/coin.mp3 &");
+		system("afplay Musics/damn.mp3 -v 3 &");
 		j = 0;
 		while (j < data->nb_sprites)
 		{
@@ -54,8 +54,8 @@ void	interact(t_data *data, int cell_x, int cell_y)
 	if ((cell_x >= 7 && cell_x <= 9) || (cell_y >= 7 && cell_y <= 9))
 	{
 		ennemy = cell_x > cell_y ? cell_x : cell_y;
-		data->player.life -= get_damage(data, ennemy);
-		system("afplay ./Musics/oof.mp3 &");
+		data->player.life -= get_damage(ennemy);
+		system("afplay ./Musics/oof.mp3 -v 3 &");
 	}
 	if ((cell_x == 4 || cell_y == 4) && data->player.has_key)
 	{

@@ -34,6 +34,7 @@ void		init_load(t_data *data)
 	data->success = false;
 	data->gameover = false;
 	data->timer = 0;
+	data->omg = false;
 }
 
 void		init_win(char *line, t_data *data)
@@ -77,6 +78,7 @@ t_data		init_data(int ac, char **av)
 	char		*line;
 	int			fd;
 
+	fd = 0;
 	if (ac < 2)
 		error_msg(&data, "Missing map file", false);
 	else if (ft_strcmp((av[1] + ft_strlen(av[1]) - 4), ".cub"))

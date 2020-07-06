@@ -68,8 +68,6 @@ void	get_tex(t_data *data, int y, int x)
 void	draw_tex(int x, t_data *data)
 {
 	int		y;
-	int		texy;
-	double	step;
 
 	y = 0;
 	while (y < (data->ray.wall_start < 0 ? 0 : data->ray.wall_start))

@@ -13,7 +13,7 @@
 #ifndef HEADER_H
 # define HEADER_H
 
-# include "../src/libft/libft.h"
+# include "../libft/libft.h"
 # include "mlx.h"
 # include <math.h>
 # include <time.h>
@@ -191,6 +191,7 @@ typedef struct	s_data
 	t_tex		sprite8;
 	t_coord		portal;
 	t_bool		success;
+	t_bool		omg;
 	t_bool		gameover;
 	int			timer;
 	char		*sec;
@@ -219,6 +220,7 @@ void			init_sprites(t_data *data);
 
 void			draw_tex(int x, t_data *data);
 void			draw_rgb(t_data *data, t_color *color, int y, int x);
+void			draw_line_sprite(t_data *data, int index, int i);
 void			draw_sprites(t_data *data);
 t_color			get_sprite_rgb(t_data *data, int index, int i, int j);
 void 			draw_minimap(t_data *data);

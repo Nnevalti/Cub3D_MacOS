@@ -83,7 +83,7 @@ char	*create_map(t_data *data, int fd, char *line)
 		tmp2 = ft_strdup(line);
 		if (tmp2[0] == '\0')
 			error_msg(data, "Empty line in map", false);
-		data->map.width = ft_strlen(tmp2) > data->map.width
+		data->map.width = (int)ft_strlen(tmp2) > data->map.width
 			? ft_strlen(tmp2) : data->map.width;
 		free(map);
 		map = ft_strjoin(tmp, tmp2);

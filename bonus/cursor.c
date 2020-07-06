@@ -22,7 +22,6 @@ void	draw_horizontal(t_data *data, int color)
 	i = -1;
 	x = (data->win.width / 2) - 10;
 	y = (data->win.height / 2) - 2;
-	color = data->key.shoot == true ? 0xCCCCCC : 0x000000;
 	while (++i < 2)
 	{
 		j = -1;
@@ -67,6 +66,7 @@ void	draw_cursor(t_data *data)
 {
 	int	color;
 
+	color = data->key.shoot == true ? 0xCCCCCC : 0x000000;
 	draw_horizontal(data, color);
 	draw_vertical(data, color);
 }

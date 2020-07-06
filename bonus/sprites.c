@@ -50,24 +50,6 @@ void	sort_sprites(t_data *data)
 	}
 }
 
-void	draw_line_sprite(t_data *data, int index, int i)
-{
-	int		j;
-	t_color	color;
-
-	data->spr[index].start_y = data->win.height / 2 - data->spr[index].size / 2;
-	data->spr[index].end_y = data->win.height / 2 + data->spr[index].size / 2;
-	j = (data->spr[index].start_y < 0) ? 0 : data->spr[index].start_y;
-	while (j < (data->spr[index].end_y >= data->win.height
-		? data->win.height - 1 : data->spr[index].end_y))
-	{
-		color = get_sprite_rgb(data, index, i, j);
-		if (color.r != 0 || color.g != 0 || color.b != 0)
-			draw_rgb(data, &color, j, i);
-		j++;
-	}
-}
-
 void	draw_sprite(t_data *data, int index, t_coord transform)
 {
 	int		i;
@@ -87,15 +69,13 @@ void	draw_sprite(t_data *data, int index, t_coord transform)
 	}
 }
 
-void	draw_sprites(t_data *data)
+void	set_sprites_data(t_data *data)
 {
 	t_coord			sprite_pos;
 	double			det;
 	int				index;
 	t_coord			transform;
 
-	compute_distances(data);
-	sort_sprites(data);
 	index = 0;
 	while (index < data->nb_sprites)
 	{
@@ -116,4 +96,11 @@ void	draw_sprites(t_data *data)
 		}
 		index++;
 	}
+}
+
+void	draw_sprites(t_data *data)
+{
+	compute_distances(data);
+	sort_sprites(data);
+	set_sprites_data(data);
 }

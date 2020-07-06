@@ -46,7 +46,7 @@ void	init_player(t_data *data, int h, int w, char dir)
 	data->player.pos.x = w;
 	data->player.pos.y = h;
 	data->player.move_speed = 0.05;
-	data->player.rot_speed = 0.08;
+	data->player.rot_speed = 0.05;
 	data->player.load = true;
 	data->player.lifebar_size = data->win.width / 2;
 	data->player.life = 100;
