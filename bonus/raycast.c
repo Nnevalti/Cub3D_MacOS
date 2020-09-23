@@ -48,13 +48,13 @@ void	ray_hit(t_data *data)
 		{
 			data->ray.side_dist.x += data->ray.delta_dist.x;
 			data->ray.mapX += data->ray.stepX;
-			data->ray.side = data->ray.dir.x > 0 ? N : S;
+			data->ray.side = data->ray.dir.x > 0 ? E : W;
 		}
 		else
 		{
 			data->ray.side_dist.y += data->ray.delta_dist.y;
 			data->ray.mapY += data->ray.stepY;
-			data->ray.side = data->ray.dir.y > 0 ? E : W;
+			data->ray.side = data->ray.dir.y > 0 ? S : N;
 		}
 		if (data->map.map[data->ray.mapY][data->ray.mapX] == 1)
 			data->ray.hit = true;
@@ -63,7 +63,7 @@ void	ray_hit(t_data *data)
 
 void	wall_x(t_data *data)
 {
-	if (data->ray.side == 0 || data->ray.side == 1)
+	if (data->ray.side == 2 || data->ray.side == 3)
 	{
 		data->ray.wall_dist = (data->ray.mapX - data->player.pos.x
 						+ (1 - data->ray.stepX) / 2) / data->ray.dir.x;
@@ -76,7 +76,7 @@ void	wall_x(t_data *data)
 	data->ray.line_height = (int)(data->win.height / data->ray.wall_dist);
 	data->ray.wall_start = -data->ray.line_height / 2 + data->win.height / 2;
 	data->ray.wall_end = data->ray.line_height / 2 + data->win.height / 2;
-	if (data->ray.side == 0 || data->ray.side == 1)
+	if (data->ray.side == 2 || data->ray.side == 3)
 		data->ray.wall_x = data->player.pos.y + data->ray.wall_dist
 			* data->ray.dir.y;
 	else
