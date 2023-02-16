@@ -14,7 +14,7 @@
 # define HEADER_H
 
 # include "../libft/libft.h"
-# include "mlx.h"
+# include "../minilibx_opengl/mlx.h"
 # include <math.h>
 # include <time.h>
 # include <stdio.h>

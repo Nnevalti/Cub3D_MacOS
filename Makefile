@@ -4,11 +4,11 @@ NAME		=	Cub3D
 CC			=	gcc
 
 # FLAGS
-CFLAGS		=	-Wall -Werror -Wextra
+#CFLAGS		=	-Wall -Werror -Wextra
 
 # HEADER
 INC_DIR		=	./include
-INC			=	-I $(INC_DIR)
+INC			=	-I $(INC_DIR) -I ./minilibx_opengl
 
 # SOURCES
 SRC_DIR		=	./src
@@ -64,10 +64,10 @@ OBJS_NAME	=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(SRC_DIR)/, $(OBJS_NAME))
 
 # MINILIBX
-MLX_DIR		=	/usr/local/include
-# MLX_DIR		=	./minilibx_opengl
-MLX_LNK_DIR	=	/usr/local/lib/
-#MLX_LNK_DIR	=	 $(MLX_DIR)
+# MLX_DIR		=	/usr/local/include
+MLX_DIR		=	./minilibx_opengl
+# MLX_LNK_DIR	=	/usr/local/lib/
+MLX_LNK_DIR	=	 $(MLX_DIR)
 MLX_INC		=	-I $(MLX_DIR)
 MLX_LNK		=	-L $(MLX_LNK_DIR) -lmlx -framework OpenGL -framework AppKit
 
@@ -87,6 +87,7 @@ all			:	 $(NAME)
 $(LIBFT)	:
 				@echo "\nCompiling $(FT_DIR)..."
 				@make -C $(FT_DIR)
+				@make -C $(MLX_DIR)
 
 $(NAME)		:	$(LIBFT) $(OBJS)
 				$(CC) $(CFLAGS) $(INC) $(FT_INC) $(MLX_INC) \
@@ -101,6 +102,7 @@ clean		:
 				@rm -rf $(OBJS)
 				@rm -rf $(OBJS_BNS)
 				make clean -C $(FT_DIR)
+				make clean -C $(MLX_DIR)
 
 fclean		:	clean
 				rm -f $(NAME)
